@@ -1,7 +1,7 @@
 import Passenger from './Passenger';
 
 class Plane {
-    constructor(rows, columns, speed, rowHeight) {
+    constructor(rows, columns, speed, rowHeight, seed) {
         console.log(rows, columns, speed, rowHeight);
         this.rows = rows;
         this.columns = columns;
@@ -11,6 +11,8 @@ class Plane {
         this.AVERAGE_ROW_HEIGHT_INCHES = rowHeight;
         this.AVERAGE_ROW_HEIGHT_MILES = this.AVERAGE_ROW_HEIGHT_INCHES / 63360.0;
         this.timeSecondsToWalkPlane = this.calculateWalkTime();
+        this.assemblyTimeWaveReductionFactor = 0.05;
+        this.seed = seed;
     }  
 
     printSeats() {
@@ -26,7 +28,7 @@ class Plane {
             row.forEach((_, j) => {
                 const isAisleSeat = this.columnLabel(j) === 'C';
                 const seatLabel = `${i + 1}${this.columnLabel(j)}`;
-                this.seats[i][j] = new Passenger(isAisleSeat, seatLabel);
+                this.seats[i][j] = new Passenger(isAisleSeat, seatLabel, this.seed);
             });
         });
     }
@@ -86,7 +88,7 @@ class Plane {
 
         this.aisleColumns().forEach((column, wave) => {
             const aisle = this.seats.map(row => row[this.aisleColumns().sort().indexOf(column)]);
-            const reductionFactor = 1 - wave * 0.05;
+            const reductionFactor = 1 - wave * this.assemblyTimeWaveReductionFactor;
             const maxAssemblyTime = aisle.reduce((max, passenger) => Math.max(max, passenger.assemblyTimeFuture), 0) * reductionFactor;
             
             totalTime += maxAssemblyTime;
