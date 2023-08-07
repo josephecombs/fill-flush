@@ -98,7 +98,12 @@ class Plane {
                     passenger.waitTimeSecondsFuture = aisle[idx - 1].waitTimeSecondsFuture + passenger.minBuffer;
                 }
                 
-                totalTime += passenger.minBuffer;
+                if (idx === 0) {
+                  // the first person in the aisle does not maintain a buffer
+                  totalTime += 0;
+                } else {
+                  totalTime += passenger.minBuffer;
+                }
             });
 
             totalTime += this.timeSecondsToWalkPlane;

@@ -20,11 +20,9 @@ describe('Plane', () => {
       // Assign the passenger to the seat in the plane
       plane.seats[i][0] = passenger;
     }
-
-    // Check the output of the disembarkCurrent method
     
     //the wait for the first person on the plane in this situation will be zero
-    //assume the whole column is standing and has gotten their stuff ready while jetbridge is getting ready
+    //assume the whole column is standing and has gotten their stuff ready while jet bridge is getting ready
     const firstPersonWaitTime = 0;
     
     expect(plane.disembarkCurrent()).toBe(
@@ -33,12 +31,9 @@ describe('Plane', () => {
 
     // Calculate the initial buffer time as the max assemblyTimeFuture of the people in the aisle
     const initialBufferTime = Math.max(...plane.seats.map(row => row[0].assemblyTimeFuture));
-
-    // Check the output of the disembarkFuture method
     
-    //likely falsely passing
     expect(plane.disembarkFuture()).toBe(
-      initialBufferTime + (plane.rows * fixedMinBuffer) + plane.calculateWalkTime()
+      initialBufferTime + ((plane.rows - 1) * fixedMinBuffer) + plane.calculateWalkTime()
     ); 
   });
 });
