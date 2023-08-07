@@ -1,0 +1,12 @@
+.homepage-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .homepage-container {
+    width: 800px;
+    margin: 0 auto;
+  }
+}
