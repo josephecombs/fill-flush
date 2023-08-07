@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+gem 'awesome_print'
+gem 'set'
