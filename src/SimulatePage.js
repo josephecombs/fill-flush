@@ -2,7 +2,7 @@ import React from 'react';
 import qs from 'qs';
 // import { withRouter } from "react-router-dom";
 
-import './SimulatePage.css';
+import './stylesheets/SimulatePage.css';
 import Plane from './models/Plane';
 import CurrentAnimation from './CurrentAnimation';
 import FutureAnimation from './FutureAnimation';
