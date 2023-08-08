@@ -4,6 +4,8 @@ import qs from 'qs';
 
 import './SimulatePage.css';
 import Plane from './models/Plane';
+import CurrentAnimation from './CurrentAnimation';
+import FutureAnimation from './FutureAnimation';
 
 class SimulatePage extends React.Component {
   constructor(props) {
@@ -19,7 +21,7 @@ class SimulatePage extends React.Component {
       passengerFlightsPerYear: 853000000, //https://www.bts.gov/newsroom/full-year-2022-us-airline-traffic-data#:~:text=For%20the%20full%20year%202022,(928M)%20reached%20in%202019.
       wakingSecInHumanLife: 1660000000,
       totalLivesSaved: null,
-      seed: 'defaultSeed',
+      seed: 12345,
     };
   }
   
@@ -33,11 +35,38 @@ class SimulatePage extends React.Component {
       averageWalkSpeedMph: params.averageWalkSpeedMph ? parseFloat(params.averageWalkSpeedMph) : this.state.averageWalkSpeedMph,
       passengerFlightsPerYear: params.passengerFlightsPerYear ? parseInt(params.passengerFlightsPerYear, 10) : this.state.passengerFlightsPerYear,
       wakingSecInHumanLife: params.wakingSecInHumanLife ? parseInt(params.wakingSecInHumanLife, 10) : this.state.wakingSecInHumanLife,
-      seed: params.seed || this.state.seed,
+      seed: parseInt(params.seed) || this.state.seed,
+      animationSecond: 0,
+      isAnimating: false,
+    });
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.animationInterval);
+  }
+  
+  toggleAnimation = () => {
+    this.setState(prevState => {
+      if (prevState.isAnimating) {
+        // If the animation was running, pause it
+        clearInterval(this.animationInterval);
+        return { isAnimating: false };
+      } else {
+        // If the animation was paused, start it
+        clearInterval(this.animationInterval);
+        this.animationInterval = setInterval(() => {
+          this.setState(prevState => ({ animationSecond: prevState.animationSecond + 1 }));
+        }, 1000);
+        return { isAnimating: true };
+      }
     });
   }
 
   runSimulation = () => {
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+    }
+    
     const plane = new Plane(
       parseInt(this.state.rows), 
       parseInt(this.state.columns), 
@@ -53,10 +82,13 @@ class SimulatePage extends React.Component {
     const avgSecSaved = (timeCurrent - timeFuture) / 2;
 
     this.setState({
+      plane: plane,
+      animationSecond: 0,
       timeCurrent: timeCurrent,
       timeFuture: timeFuture,
       avgSecSavedPerPassenger: avgSecSaved,
-      totalLivesSaved: (avgSecSaved * this.state.passengerFlightsPerYear) / this.state.wakingSecInHumanLife
+      totalLivesSaved: (avgSecSaved * this.state.passengerFlightsPerYear) / this.state.wakingSecInHumanLife,
+      isAnimating: true
     }, () => {
       const stateForUrl = {
         rows: this.state.rows,
@@ -68,6 +100,13 @@ class SimulatePage extends React.Component {
         seed: this.state.seed,
       };
       const newQueryString = qs.stringify(stateForUrl);
+      
+      if (this.state.isAnimating) {
+        this.animationInterval = setInterval(() => {
+          this.setState(prevState => ({ animationSecond: prevState.animationSecond + 1 }));
+        }, 1000);
+      }
+            
       window.history.pushState({}, '', `?${newQueryString}`);
     });
   }
@@ -103,28 +142,41 @@ class SimulatePage extends React.Component {
           </tbody>
         </table>
         <button onClick={this.runSimulation}>Run Simulation</button>
+        {(this.state.totalLivesSaved !== null) && <div>
+            <p>Time to deplane status quo: {this.formatTime(this.state.timeCurrent)}</p>
+            <p>Time to deplane using FILL AND FLUSH method: {this.formatTime(this.state.timeFuture)}</p>
+          
+            <CurrentAnimation 
+              plane={this.state.plane} 
+              animationSecond={this.state.animationSecond}
+            />
+            <FutureAnimation 
+              plane={this.state.plane}
+              animationSecond={this.state.animationSecond}
+            />
+            <button onClick={this.toggleAnimation}>
+              {this.state.isAnimating ? 'Pause' : 'Start'} Animation
+            </button>
       
-        <p>Time to deplane status quo: {this.formatTime(this.state.timeCurrent)}</p>
-        <p>Time to deplane using FILL AND FLUSH method: {this.formatTime(this.state.timeFuture)}</p>
-      
-        <h2>Impact of Efficiency Improvement</h2>
-        <table className="input-table">
-          <tbody>
-            <tr>
-              <td><label>Avg. Seconds Saved per Passenger:</label></td>
-              <td><input type="number" value={Math.round(this.state.avgSecSavedPerPassenger)} onChange={e => this.setState({ avgSecSavedPerPassenger: e.target.value })} /></td>
-            </tr>
-            <tr>
-              <td><label>Passenger Flights per Year (USA):</label></td>
-              <td><input type="number" value={this.state.passengerFlightsPerYear} onChange={e => this.setState({ passengerFlightsPerYear: e.target.value })} /></td>
-            </tr>
-            <tr>
-              <td><label>Waking Seconds in a Human Life (~79 Years):</label></td>
-              <td><input type="number" value={this.state.wakingSecInHumanLife} onChange={e => this.setState({ wakingSecInHumanLife: e.target.value })} /></td>
-            </tr>
-          </tbody>
-        </table>
-        <p>Total lives saved per year (assuming savings on each passenger flight): <strong>{Math.round(this.state.totalLivesSaved)}</strong></p>
+            <h2>Impact of Efficiency Improvement</h2>
+            <table className="input-table">
+              <tbody>
+                <tr>
+                  <td><label>Avg. Seconds Saved per Passenger:</label></td>
+                  <td><input type="number" value={Math.round(this.state.avgSecSavedPerPassenger)} onChange={e => this.setState({ avgSecSavedPerPassenger: e.target.value })} /></td>
+                </tr>
+                <tr>
+                  <td><label>Passenger Flights per Year (USA):</label></td>
+                  <td><input type="number" value={this.state.passengerFlightsPerYear} onChange={e => this.setState({ passengerFlightsPerYear: e.target.value })} /></td>
+                </tr>
+                <tr>
+                  <td><label>Waking Seconds in a Human Life (~79 Years):</label></td>
+                  <td><input type="number" value={this.state.wakingSecInHumanLife} onChange={e => this.setState({ wakingSecInHumanLife: e.target.value })} /></td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Total lives saved per year (assuming savings on each passenger flight): <strong>{Math.round(this.state.totalLivesSaved)}</strong></p>
+        </div>}
       </div>
     );
   }

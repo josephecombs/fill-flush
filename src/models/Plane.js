@@ -12,6 +12,7 @@ class Plane {
         this.AVERAGE_ROW_HEIGHT_MILES = this.AVERAGE_ROW_HEIGHT_INCHES / 63360.0;
         this.timeSecondsToWalkPlane = this.calculateWalkTime();
         this.assemblyTimeWaveReductionFactor = 0.05;
+        this.seatsHash = {}; //to let the animations look up their passengers
         this.seed = seed;
     }  
 
@@ -24,11 +25,16 @@ class Plane {
     }
 
     embark() {
+        let count = 0;
         this.seats.forEach((row, i) => {
             row.forEach((_, j) => {
                 const isAisleSeat = this.columnLabel(j) === 'C';
                 const seatLabel = `${i + 1}${this.columnLabel(j)}`;
-                this.seats[i][j] = new Passenger(isAisleSeat, seatLabel, this.seed);
+                // we can take 10 random samples inside Passenger without overlap. not sure if this is necessary or not. pretty low cost.
+                let curPassenger = new Passenger(isAisleSeat, seatLabel, this.seed + (10 * count));
+                this.seats[i][j] = curPassenger;
+                this.seatsHash[seatLabel] = curPassenger;
+                count += 1;
             });
         });
     }
