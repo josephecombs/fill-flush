@@ -25,8 +25,13 @@ class SimulatePage extends React.Component {
     };
   }
   
-  componentDidMount(props) {
-    const params = qs.parse(window.location.search);
+  componentDidMount(props) {    
+    const queryString = window.location.search.substring(1); // Remove the leading '?'
+    const params = qs.parse(queryString);
+
+    console.log("params: ", params);
+    console.log("parseInt(params.rows, 10)");
+    console.log(parseInt(params.rows, 10));
 
     this.setState({
       rows: params.rows ? parseInt(params.rows, 10) : this.state.rows,
@@ -88,7 +93,7 @@ class SimulatePage extends React.Component {
       timeFuture: timeFuture,
       avgSecSavedPerPassenger: avgSecSaved,
       totalLivesSaved: (avgSecSaved * this.state.passengerFlightsPerYear) / this.state.wakingSecInHumanLife,
-      isAnimating: true
+      isAnimating: false,
     }, () => {
       const stateForUrl = {
         rows: this.state.rows,
