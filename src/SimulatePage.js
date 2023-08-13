@@ -11,7 +11,7 @@ class SimulatePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: 60,
+      rows: 15,
       columns: 6,
       averageRowHeightInches: 31,
       averageWalkSpeedMph: 3.1,
@@ -90,7 +90,7 @@ class SimulatePage extends React.Component {
       timeFuture: timeFuture,
       avgSecSavedPerPassenger: avgSecSaved,
       totalLivesSaved: (avgSecSaved * this.state.passengerFlightsPerYear) / this.state.wakingSecInHumanLife,
-      isAnimating: false,
+      isAnimating: true,
     }, () => {
       const stateForUrl = {
         rows: this.state.rows,

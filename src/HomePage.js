@@ -36,6 +36,8 @@ function HomePage() {
         </ul>
 
         <p>Conclusion: The Fill and Flush deplaning method represents an innovative approach to aircraft disembarkation, using a systematic fill-and-flush process to streamline the flow of passengers. It aims to enhance efficiency, reduce deplaning time, and improve the overall passenger experience.</p>
+
+        <p>Contribute: this website is a github page. Please contribute to it <a href="https://github.com/josephecombs/fill-flush/">here</a>.</p>
       </div>
       <Link to="/simulate" className="simulate-button">Start Simulating</Link>
     </div>
