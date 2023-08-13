@@ -14,7 +14,7 @@ I've called the process "Fill and Flush" to represent the way the limited resour
 # Order of deplaning (current):
 Deplaning order is row by row in quasi middle out - 1C -> 1B -> 1A -> 1D -> 1E -> 1F -> 2C...
 
-# Order of deplaning (current):
+# Order of deplaning (future):
 Deplaning order is column by column, middle out - 1C -> C2 -> ... -> C60 -> 1E -> 1F -> 2C...
 
 # (TODO) Addressing various objections:
@@ -34,6 +34,8 @@ Deplaning order is column by column, middle out - 1C -> C2 -> ... -> C60 -> 1E -
   you can still let them off first and apply this system in coach and get the improvement
 -Won't the person in 1F get mad watching people go by?
   got to have education. this makes everyone better off. lives are at stake
+-why go strictly column by column? why not be MORE lassiez faire and say just manage waves? wave 1, wave 2, wave 3, etc.?
+  this could be an even further improvement and in a way can solve the 1F problem by letting 1F occupy space if it is there - I suspect a few more people can fit the aisle than there are rows so you may lose some value being strict. OTOH could lead to conflict
 
 # Getting Started with Create React App
 
