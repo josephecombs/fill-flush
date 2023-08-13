@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "https://www.fillandflush.com/static/css/main.747829b5.css",
-    "main.js": "https://www.fillandflush.com/static/js/main.40003081.js",
-    "static/js/787.ff8ecd82.chunk.js": "https://www.fillandflush.com/static/js/787.ff8ecd82.chunk.js",
-    "index.html": "https://www.fillandflush.com/index.html",
-    "main.747829b5.css.map": "https://www.fillandflush.com/static/css/main.747829b5.css.map",
-    "main.40003081.js.map": "https://www.fillandflush.com/static/js/main.40003081.js.map",
-    "787.ff8ecd82.chunk.js.map": "https://www.fillandflush.com/static/js/787.ff8ecd82.chunk.js.map"
+    "main.css": "/static/css/main.747829b5.css",
+    "main.js": "/static/js/main.d24a2875.js",
+    "static/js/787.ff8ecd82.chunk.js": "/static/js/787.ff8ecd82.chunk.js",
+    "index.html": "/index.html",
+    "main.747829b5.css.map": "/static/css/main.747829b5.css.map",
+    "main.d24a2875.js.map": "/static/js/main.d24a2875.js.map",
+    "787.ff8ecd82.chunk.js.map": "/static/js/787.ff8ecd82.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.747829b5.css",
-    "static/js/main.40003081.js"
+    "static/js/main.d24a2875.js"
   ]
 }
