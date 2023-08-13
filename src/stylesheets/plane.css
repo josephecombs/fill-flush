@@ -1,0 +1,70 @@
+.plane {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.row-label {
+  width: 20px;
+  text-align: right;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.seat {
+  width: 30px;
+  height: 20px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aisle {
+  border: none;
+  width: 20px; /* Define the width of the aisle */
+}
+
+.column-label {
+  border: 1px solid white !important;
+}
+
+.top-left {
+  visibility: hidden;
+}
+
+.gutter {
+  display: flex;
+  flex-wrap: wrap;
+  width: 200px; /* You can adjust the width to match the plane's width */
+  border: 1px solid #ccc; /* Optional, to visualize the gutter */
+}
+
+.passenger-off-plane {
+  width: 30px; /* Adjust to the width of a seat */
+  height: 30px; /* Adjust to the height of a seat */
+}
+
+.plane-container {
+  /* display: inline-block; */
+  max-width: 45%;
+}
+
+.planes-container {
+  display: flex; /* Use Flexbox */
+  justify-content: space-evenly; /* Evenly distribute space between planes */
+  align-items: flex-start; /* Align planes to the top */
+  width: 100%; /* Take the full available width */
+}
+
+.simulation-heading {
+  text-align: center;
+}
