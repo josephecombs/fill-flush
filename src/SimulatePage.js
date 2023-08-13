@@ -21,6 +21,7 @@ class SimulatePage extends React.Component {
       passengerFlightsPerYear: 853000000, //https://www.bts.gov/newsroom/full-year-2022-us-airline-traffic-data#:~:text=For%20the%20full%20year%202022,(928M)%20reached%20in%202019.
       wakingSecInHumanLife: 1660000000,
       totalLivesSaved: null,
+      animationSecond: 0,
       seed: 12345,
     };
   }
@@ -147,17 +148,24 @@ class SimulatePage extends React.Component {
             <p>Time to deplane status quo: {this.formatTime(this.state.timeCurrent)}</p>
             <p>Time to deplane using FILL AND FLUSH method: {this.formatTime(this.state.timeFuture)}</p>
           
-            <CurrentAnimation 
-              plane={this.state.plane} 
-              animationSecond={this.state.animationSecond}
-            />
-            <FutureAnimation 
-              plane={this.state.plane}
-              animationSecond={this.state.animationSecond}
-            />
-            <button onClick={this.toggleAnimation}>
-              {this.state.isAnimating ? 'Pause' : 'Start'} Animation
-            </button>
+            <div id="simulation-player-controls">
+              <div>Simulation at {this.state.animationSecond} Seconds</div>
+
+              <button onClick={this.toggleAnimation}>
+                {this.state.isAnimating ? 'Pause' : 'Start'} Animation
+              </button>
+            </div>
+
+            <div className='planes-container'>
+              <CurrentAnimation 
+                plane={this.state.plane} 
+                animationSecond={this.state.animationSecond}
+              />
+              <FutureAnimation 
+                plane={this.state.plane}
+                animationSecond={this.state.animationSecond}
+              />
+            </div>
       
             <h2>Impact of Efficiency Improvement</h2>
             <table className="input-table">

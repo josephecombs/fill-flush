@@ -50,3 +50,8 @@
 .input-table input {
   width: 100px;
 }
+
+#simulation-player-controls {
+  text-align: center; /* Center the text and button horizontally */
+  margin-bottom: 10px; /* Add some space between the controls and the planes */
+}

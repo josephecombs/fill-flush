@@ -63,14 +63,29 @@ class CurrentAnimation extends Component {
       </div>
     ));
 
+    // Collect passengers who are off the plane
+    const offPlanePassengers = Object.values(plane.seatsHash)
+      .filter(passenger => passenger.waitTimeSecondsCurrent < animationSecond)
+      .sort((a, b) => a.waitTimeSecondsCurrent - b.waitTimeSecondsCurrent); // Sort by waitTimeSecondsCurrent
+
     return (
-      <div className="plane" id="current-animation">
-        <div>Current Animation Placeholder - {this.props.animationSecond}</div>
-        <div className="row column-labels">
-          <div className="row-label top-left">Z</div>
-          {columnLabels}
+      <div className="plane-container">
+        <div className="simulation-heading">Status Quo System:</div>
+        <div className="plane" id="current-animation">
+          <div className="row column-labels">
+            <div className="row-label top-left">Z</div>
+            {columnLabels}
+          </div>
+          {rows}
+          <div className="gutter">
+            <div className="gutter-label">Off Plane:</div>
+            <div>
+              {offPlanePassengers.map((passenger, index) => (
+                <Passenger key={index} passenger={passenger} />
+              ))}
+            </div>
+          </div>
         </div>
-        {rows}
       </div>
     );
   }
