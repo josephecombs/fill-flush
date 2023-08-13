@@ -29,10 +29,6 @@ class SimulatePage extends React.Component {
     const queryString = window.location.search.substring(1); // Remove the leading '?'
     const params = qs.parse(queryString);
 
-    console.log("params: ", params);
-    console.log("parseInt(params.rows, 10)");
-    console.log(parseInt(params.rows, 10));
-
     this.setState({
       rows: params.rows ? parseInt(params.rows, 10) : this.state.rows,
       columns: params.columns ? parseInt(params.columns, 10) : this.state.columns,
@@ -61,7 +57,7 @@ class SimulatePage extends React.Component {
         clearInterval(this.animationInterval);
         this.animationInterval = setInterval(() => {
           this.setState(prevState => ({ animationSecond: prevState.animationSecond + 1 }));
-        }, 1000);
+        }, 250);
         return { isAnimating: true };
       }
     });
@@ -109,7 +105,7 @@ class SimulatePage extends React.Component {
       if (this.state.isAnimating) {
         this.animationInterval = setInterval(() => {
           this.setState(prevState => ({ animationSecond: prevState.animationSecond + 1 }));
-        }, 1000);
+        }, 250);
       }
             
       window.history.pushState({}, '', `?${newQueryString}`);

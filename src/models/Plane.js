@@ -2,10 +2,9 @@ import Passenger from './Passenger';
 
 class Plane {
     constructor(rows, columns, speed, rowHeight, seed) {
-        console.log(rows, columns, speed, rowHeight);
         this.rows = rows;
         this.columns = columns;
-        this.seats = new Array(rows).fill(new Array(columns).fill(null));
+        this.seats = Array.from({ length: rows }, () => new Array(columns).fill(null));
         this.AVERAGE_WALK_SPEED_MILES_PER_HOUR = speed;
         this.AVERAGE_WALK_SPEED_MILES_PER_SECOND = this.AVERAGE_WALK_SPEED_MILES_PER_HOUR / 3600.0;
         this.AVERAGE_ROW_HEIGHT_INCHES = rowHeight;
@@ -14,12 +13,11 @@ class Plane {
         this.assemblyTimeWaveReductionFactor = 0.05;
         this.seatsHash = {}; //to let the animations look up their passengers
         this.seed = seed;
-    }  
+    } 
 
     printSeats() {
         this.seats.forEach((row, i) => {
             this.arrangeMiddleOut(row).forEach(seat => {
-                console.log(`${i + 1}${this.columnLabel(row.indexOf(seat))}`);
             });
         });
     }
@@ -29,7 +27,7 @@ class Plane {
         this.seats.forEach((row, i) => {
             row.forEach((_, j) => {
                 const isAisleSeat = this.columnLabel(j) === 'C';
-                const seatLabel = `${i + 1}${this.columnLabel(j)}`;
+                const seatLabel = `${this.columnLabel(j)}${i + 1}`;
                 // we can take 10 random samples inside Passenger without overlap. not sure if this is necessary or not. pretty low cost.
                 let curPassenger = new Passenger(isAisleSeat, seatLabel, this.seed + (10 * count));
                 this.seats[i][j] = curPassenger;
@@ -37,10 +35,30 @@ class Plane {
                 count += 1;
             });
         });
+
+        // this.putSeatsIntoSeatsHash();
+    }
+
+    putSeatsIntoSeatsHash() {
+        this.seats.forEach((row, i) => {
+            row.forEach((passenger, j) => {
+                const seatLabel = `${i + 1}${this.columnLabel(j)}`;
+
+                this.seatsHash[seatLabel] = passenger;
+            });
+        });
     }
 
     columnLabel(index) {
-        return ['A', 'B', 'C', 'D', 'E', 'F'][index];
+        switch (this.columns) {
+            case 1: return ['C'][index];
+            case 2: return ['C', 'D'][index];
+            case 3: return ['A', 'C', 'D'][index];
+            case 4: return ['A', 'C', 'D', 'F'][index];
+            case 5: return ['A', 'B', 'C', 'D', 'F'][index];
+            case 6: return ['A', 'B', 'C', 'D', 'E', 'F'][index];
+            default: return null;
+        }
     }
 
     arrangeMiddleOut(row) {
@@ -85,6 +103,8 @@ class Plane {
         
         //must finally consider the amount of time it takes the last person on the plane to walk the plane
         totalTime += this.timeSecondsToWalkPlane;
+
+        // this.putSeatsIntoSeatsHash();
         
         return totalTime;
     }
@@ -116,6 +136,8 @@ class Plane {
 
             totalTime += this.timeSecondsToWalkPlane;
         });
+
+        // this.putSeatsIntoSeatsHash();
 
         return totalTime;
     }

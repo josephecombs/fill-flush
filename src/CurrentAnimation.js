@@ -1,76 +1,21 @@
 import React, { Component } from 'react';
-import p5 from 'p5';
+import Passenger from './components/Passenger'; // Import the Passenger component
+
+import './stylesheets/plane.css';
 
 class CurrentAnimation extends Component {
   constructor(props) {
     super(props);
-    this.myRef = React.createRef();
     this.state = {
       // initial state
     };
 
-    this.drawSeats = this.drawSeats.bind(this);
+    // this.drawSeats = this.drawSeats.bind(this);
   }
 
   componentDidMount() {
-    this.myP5 = new p5(this.Sketch, this.myRef.current);
+    
   }
-
-  getSeatHeight = () => {
-    // Define logic to calculate seat height here
-    // For example, you can return a fixed value or base it on other properties
-    return 20;
-  };
-
-  Sketch = (p) => {
-    p.setup = () => {
-      const canvasHeight = (this.props.plane.rows + 2) * this.getSeatHeight();
-      p.createCanvas(300, canvasHeight);
-      // Additional setup code
-    };
-
-    p.draw = () => {
-      p.background(250);
-      this.drawSeats(p);
-      // Draw seats and passengers
-      // Update animation state
-    };
-
-    // Additional functions to handle drawing and animation
-  };
-
-  drawSeats = (p) => {
-    const { plane } = this.props;
-    const { seats, columns } = plane;
-    const seatWidth = 30;
-    const seatHeight = this.getSeatHeight();
-    const gap = 30; // Gap for the aisle
-
-    const seatLabels = this.getSeatArrangement(columns);
-    const leftLabelWidth = 16;
-
-    seatLabels.forEach((label, colIndex) => {
-      let x = colIndex * seatWidth + seatWidth / 2 + leftLabelWidth;
-      p.text(label, x, 15);
-    });
-
-    // Draw seats and row labels
-    seats.forEach((row, rowIndex) => {
-      p.text(rowIndex + 1, 5, seatHeight * (rowIndex + 1) + seatHeight / 1.5); // Row label
-
-      seatLabels.forEach((seatLabel, colIndex) => {
-        if (seatLabel !== '||') {
-          let x = colIndex * seatWidth + 22; // Offset for row labels
-          const y = rowIndex * seatHeight + 20; // Offset for column labels
-          p.rect(x, y, seatWidth, seatHeight);
-        } else {
-          let x = colIndex * seatWidth + 22; // Offset for row labels
-          const y = rowIndex * seatHeight + 20; // Offset for column labels
-          p.rect(x, y, seatWidth, seatHeight);
-        }
-      });
-    });
-  };
 
   getSeatArrangement = (numColumns) => {
     switch (numColumns) {
@@ -85,24 +30,47 @@ class CurrentAnimation extends Component {
   }
 
   render() {
-    const { plane } = this.props;
+    const { plane, animationSecond } = this.props;
     const seatArrangement = this.getSeatArrangement(plane.columns);
+    const columnLabels = seatArrangement.map((seatLabel, seatIndex) => (
+      <div key={seatIndex} className={`column-label seat ${seatLabel === '||' ? 'aisle' : ''}`}>
+        {seatLabel !== '||' ? seatLabel : ''}
+      </div>
+    ));
+
     const rows = plane.seats.map((row, rowIndex) => (
-      <tr key={rowIndex}>
-        {seatArrangement.map((seatPosition, seatIndex) => {
-          if (seatPosition === 'AISLE') {
-            return <td key={`${rowIndex}-${seatIndex}-aisle`} className="aisle">A</td>;
+      <div key={rowIndex} className="row">
+        <div className="row-label">{rowIndex + 1}</div>
+        {seatArrangement.map((seatLabel, seatIndex) => {
+
+          let displayedSeatKey = '';
+
+          if (seatLabel !== '||') {
+            const seatKey = `${seatLabel}${rowIndex + 1}`;
+            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]}/>; // Use the Passenger component
+
+            if (plane.seatsHash[seatKey].waitTimeSecondsCurrent < animationSecond) {
+              displayedSeatKey = seatKey;
+            }
           }
-          const seat = row.find(seat => seat.position === seatPosition);
-          return <td key={`${rowIndex}-${seatIndex}`}>{seat ? seat.seat : ''}Z</td>;
+
+          return (
+            <div key={`${rowIndex}-${seatIndex}`} className={`seat ${seatLabel === '||' ? 'aisle' : ''}`}>
+              {seatLabel !== '||' ? displayedSeatKey : ''}
+            </div>
+          );
         })}
-      </tr>
+      </div>
     ));
 
     return (
-      <div>
-        Current Animation Placeholder - {this.props.animationSecond}
-        <div ref={this.myRef}></div>
+      <div className="plane" id="current-animation">
+        <div>Current Animation Placeholder - {this.props.animationSecond}</div>
+        <div className="row column-labels">
+          <div className="row-label top-left">Z</div>
+          {columnLabels}
+        </div>
+        {rows}
       </div>
     );
   }
