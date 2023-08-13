@@ -6,7 +6,7 @@ describe('Plane', () => {
     
     const seed = 'defaultSeed';
     // Create a new Plane with 30 rows and 1 column
-    const plane = new Plane(30, 1, 2.8, 31, seed);
+    const plane = new Plane(30, 1, 3.1, 31, seed);
 
     // Assign passengers with known assembly times to each seat in the plane
     const fixedAssemblyTime = 5;
@@ -42,7 +42,7 @@ describe('Plane', () => {
   it('calculates disembarkation times correctly for a two-column plane with 15 rows', () => {
     // Create a new Plane with 15 rows and 2 columns
     const seed = 'defaultSeed';
-    const plane = new Plane(15, 2, 2.8, 31, seed);
+    const plane = new Plane(15, 2, 3.1, 31, seed);
 
     // Assign passengers with known assembly times to each seat in the plane
     const fixedAssemblyTime = 5;

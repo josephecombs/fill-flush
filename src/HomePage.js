@@ -1,5 +1,6 @@
 import React from 'react';
 import './stylesheets/HomePage.css';
+import { Link } from 'react-router-dom'; // Import Link to create a navigable button
 
 function HomePage() {
   return (
@@ -36,7 +37,7 @@ function HomePage() {
 
         <p>Conclusion: The Fill and Flush deplaning method represents an innovative approach to aircraft disembarkation, using a systematic fill-and-flush process to streamline the flow of passengers. It aims to enhance efficiency, reduce deplaning time, and improve the overall passenger experience.</p>
       </div>
-      <p>Click <a href="/simulate">here</a> to start simulating.</p>
+      <Link to="/simulate" className="simulate-button">Start Simulating</Link>
     </div>
   );
 }

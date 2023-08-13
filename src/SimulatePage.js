@@ -14,7 +14,7 @@ class SimulatePage extends React.Component {
       rows: 60,
       columns: 6,
       averageRowHeightInches: 31,
-      averageWalkSpeedMph: 2.8,
+      averageWalkSpeedMph: 3.1,
       timeCurrent: null,
       timeFuture: null,
       avgSecSavedPerPassenger: 0,

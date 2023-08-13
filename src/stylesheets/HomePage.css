@@ -10,3 +10,24 @@
     margin: 0 auto;
   }
 }
+
+.simulate-button {
+  display: block; /* Changed to block for full width */
+  background-color: #007BFF;
+  color: #ffffff;
+  padding: 20px 40px; /* Increased padding for taller and wider button */
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px; /* Increased font size */
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin: 20px auto; /* Centering by adding auto margins */
+  width: 60%; /* Set a specific width */
+}
+
+.simulate-button:hover {
+  background-color: #0056b3;
+}
