@@ -38,25 +38,61 @@ class FutureAnimation extends Component {
       </div>
     ));
 
+    let constructedAisle = new Array(plane.rows).fill(null);
+
+    plane.seats.forEach((row, rowIndex) => {
+      row.forEach((passenger) => {
+        const deplaningPhase = passenger.fillAndFlushDeplaningPhase(animationSecond);
+    
+        // Check if the passenger is in one of the phases corresponding to being in the aisle
+        if (['gatheringBelongings', 'standingStopped', 'standingWaiting'].includes(deplaningPhase)) {
+          constructedAisle[rowIndex] = passenger; // Place the passenger in the aisle at the corresponding row position
+        }
+
+        if (['walking'].includes(deplaningPhase)) {
+          let approximateAislePosition = rowIndex;
+
+          let secondsSinceWalkStart = animationSecond - passenger.fillAndFlushTracker.walkingStart;
+          let timeWalking = passenger.fillAndFlushTracker.walkingEnd - passenger.fillAndFlushTracker.walkingStart;
+
+          let proportionComplete = secondsSinceWalkStart / timeWalking;
+          let proportionRemaining = 1 - proportionComplete;
+
+          approximateAislePosition = Math.round(rowIndex * proportionRemaining)
+
+          constructedAisle[approximateAislePosition] = passenger; // Place the passenger in the aisle at the corresponding row position
+        }
+      });
+    });
+
+    console.log(constructedAisle);
+
     const rows = plane.seats.map((row, rowIndex) => (
       <div key={rowIndex} className="row">
         <div className="row-label">{rowIndex + 1}</div>
         {seatArrangement.map((seatLabel, seatIndex) => {
 
           let displayedSeatKey = '';
+          let aisleTile = 'A';
 
           if (seatLabel !== '||') {
             const seatKey = `${seatLabel}${rowIndex + 1}`;
-            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]} deplaningPhase={'seated'}/>; // Use the Passenger component
+            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]} deplaningPhase={'seated'}/>;
 
             if (plane.seatsHash[seatKey].waitTimeSecondsFuture < animationSecond) {
               displayedSeatKey = seatKey;
+            }
+          } else {
+            if (constructedAisle[rowIndex]) {
+              aisleTile = <Passenger passenger={constructedAisle[rowIndex]} deplaningPhase={constructedAisle[rowIndex].fillAndFlushDeplaningPhase(animationSecond)}/>;
+            } else {
+              aisleTile = 'I';
             }
           }
 
           return (
             <div key={`${rowIndex}-${seatIndex}`} className={`seat ${seatLabel === '||' ? 'aisle' : ''}`}>
-              {seatLabel !== '||' ? displayedSeatKey : ''}
+              {seatLabel !== '||' ? displayedSeatKey : aisleTile}
             </div>
           );
         })}

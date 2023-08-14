@@ -45,7 +45,7 @@ class CurrentAnimation extends Component {
     // if there's nobody in the aisle in that position, leave the element blank. 
     // the constructedAisle should have as many entries as the rows of the plane itself
 
-    let constructedAisle = new Array(plane.rows).fill(null); // Initialize the aisle with null (empty)
+    let constructedAisle = new Array(plane.rows).fill(null);
 
     plane.seats.forEach((row, rowIndex) => {
       row.forEach((passenger) => {
@@ -78,7 +78,7 @@ class CurrentAnimation extends Component {
         {seatArrangement.map((seatLabel, seatIndex) => {
 
           let displayedSeatKey = '';
-          let aisleThingy = 'A';
+          let aisleTile = 'A';
 
           if (seatLabel !== '||') {
             const seatKey = `${seatLabel}${rowIndex + 1}`;
@@ -89,15 +89,15 @@ class CurrentAnimation extends Component {
             }
           } else {
             if (constructedAisle[rowIndex]) {
-              aisleThingy = <Passenger passenger={constructedAisle[rowIndex]} deplaningPhase={constructedAisle[rowIndex].statusQuoDeplaningPhase(animationSecond)}/>;
+              aisleTile = <Passenger passenger={constructedAisle[rowIndex]} deplaningPhase={constructedAisle[rowIndex].statusQuoDeplaningPhase(animationSecond)}/>;
             } else {
-              aisleThingy = 'I';
+              aisleTile = 'I';
             }
           }
 
           return (
             <div key={`${rowIndex}-${seatIndex}`} className={`seat ${seatLabel === '||' ? 'aisle' : ''}`}>
-              {seatLabel !== '||' ? displayedSeatKey : aisleThingy}
+              {seatLabel !== '||' ? displayedSeatKey : aisleTile}
             </div>
           );
         })}
