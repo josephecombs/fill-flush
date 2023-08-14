@@ -61,7 +61,7 @@ class SimulatePage extends React.Component {
       }
     });
   };
-  
+
   runSimulation = () => {
     if (this.animationInterval) {
       clearInterval(this.animationInterval);
@@ -151,7 +151,7 @@ class SimulatePage extends React.Component {
             </tr>
           </tbody>
         </table>
-        <button onClick={this.runSimulation}>Run Simulation</button>
+        <button className="simulate-button" onClick={this.runSimulation}>Run Simulation</button>
         {(this.state.totalLivesSaved !== null) && <div>
             <p>Time to deplane status quo: {this.formatTime(this.state.timeCurrent)}</p>
             <p>Time to deplane using FILL AND FLUSH method: {this.formatTime(this.state.timeFuture)}</p>
@@ -159,7 +159,7 @@ class SimulatePage extends React.Component {
             <div id="simulation-player-controls">
               <div>Simulation at {this.state.animationSecond} Seconds</div>
 
-              <button onClick={this.toggleAnimation}>
+              <button className="animation-button" onClick={this.toggleAnimation}>
                 {this.state.isAnimating ? 'Pause' : 'Start'} Animation
               </button>
             </div>

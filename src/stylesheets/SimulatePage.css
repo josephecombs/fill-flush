@@ -51,7 +51,30 @@
   width: 100px;
 }
 
+.simulate-button, .animation-button {
+  display: inline-block;
+  background-color: #007BFF;
+  color: #ffffff;
+  padding: 6px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin: 10px;
+  width: auto;
+}
+
+.simulate-button:hover, .animation-button:hover {
+  background-color: #0056b3;
+}
+
 #simulation-player-controls {
-  text-align: center; /* Center the text and button horizontally */
-  margin-bottom: 10px; /* Add some space between the controls and the planes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
