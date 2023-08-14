@@ -35,6 +35,30 @@ class Passenger {
         }
     }
 
+    statusQuoDeplaningPhase(animationSecond) {
+      this.deplaningPhase(this.statusQuoTracker, animationSecond)
+    }
+
+    fillAndFlushDeplaningPhase(animationSecond) {
+      this.deplaningPhase(this.fillAndFlushTracker, animationSecond)
+    }
+
+    deplaningPhase(tracker, animationSecond) {
+      if (animationSecond < tracker.seatedEnd) {
+        return 'seated';
+      } else if (animationSecond < tracker.gatheringBelongingsEnd) {
+        return 'gatheringBelongings';
+      } else if (animationSecond < tracker.standingStoppedEnd) {
+        return 'standingStopped';
+      } else if (animationSecond < tracker.standingWaitingEnd) {
+        return 'standingWaiting';
+      } else if (animationSecond < tracker.walkingEnd) {
+        return 'walking';
+      } else {
+        return 'exited';
+      }
+    }
+
     // Seeded random number generator using Mulberry32 algorithm
     seededRandom() {
       let seed = this.seeds.shift(); // Shift a seed from the seeds array
