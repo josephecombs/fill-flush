@@ -1,33 +1,72 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Set minimum height to fill the full viewport */
+  margin: 0;
+}
+
+#root {
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the container takes at least the full viewport height */
+  justify-content: space-between; /* Pushes content and footer apart */
+}
+
 .homepage-container {
   width: 100%;
+  max-width: 1000px;
   padding: 20px;
   box-sizing: border-box;
+  margin: 0 auto;
+  flex: 1 0 auto; /* Allow the main content to grow and shrink */
 }
 
 @media (min-width: 768px) {
   .homepage-container {
-    width: 800px;
-    margin: 0 auto;
+    padding: 40px;
   }
 }
 
 .simulate-button {
-  display: block; /* Changed to block for full width */
+  display: block;
   background-color: #007BFF;
   color: #ffffff;
-  padding: 20px 40px; /* Increased padding for taller and wider button */
+  padding: 20px 40px;
   text-align: center;
   text-decoration: none;
-  font-size: 20px; /* Increased font size */
+  font-size: 20px;
   font-weight: bold;
   border-radius: 10px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  margin: 20px auto; /* Centering by adding auto margins */
-  width: 60%; /* Set a specific width */
+  margin: 20px auto;
+  width: 80%; /* Increased width for better appearance on mobile */
 }
 
 .simulate-button:hover {
   background-color: #0056b3;
+}
+
+.footer {
+  background-color: #f4f4f4;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  flex-shrink: 0; /* Prevent the footer from shrinking */
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+.footer a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }
