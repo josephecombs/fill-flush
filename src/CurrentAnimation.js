@@ -84,7 +84,7 @@ class CurrentAnimation extends Component {
             const seatKey = `${seatLabel}${rowIndex + 1}`;
             displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]} deplaningPhase={'seated'}/>;
 
-            if (plane.seatsHash[seatKey].waitTimeSecondsCurrent < animationSecond) {
+            if (plane.seatsHash[seatKey].fillAndFlushDeplaningPhase(animationSecond) !== 'seated') {
               displayedSeatKey = seatKey;
             }
           } else {
