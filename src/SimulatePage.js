@@ -70,8 +70,8 @@ class SimulatePage extends React.Component {
     const plane = new Plane(
       parseInt(this.state.rows), 
       parseInt(this.state.columns), 
-      parseFloat(this.state.averageRowHeightInches), 
       parseFloat(this.state.averageWalkSpeedMph),
+      parseFloat(this.state.averageRowHeightInches), 
       this.state.seed,
     );
     plane.embark();

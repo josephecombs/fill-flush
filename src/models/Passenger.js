@@ -3,7 +3,7 @@ class Passenger {
         this.seat = seat;
         this.seeds = this.generateSeeds(seed);
         const assemblyTime = Math.max(this.normalDistribution(5, 1.5), 0);
-        this.assemblyTimeCurrent = isAisleSeat ? 0 : assemblyTime;
+        this.assemblyTimeCurrent = false ? 0 : assemblyTime;
         this.assemblyTimeFuture = assemblyTime + 2;
         this.minBuffer = Math.max(this.normalDistribution(2), 0);
         this.waitTimeSecondsCurrent = 0;
@@ -36,11 +36,11 @@ class Passenger {
     }
 
     statusQuoDeplaningPhase(animationSecond) {
-      this.deplaningPhase(this.statusQuoTracker, animationSecond)
+      return this.deplaningPhase(this.statusQuoTracker, animationSecond);
     }
 
     fillAndFlushDeplaningPhase(animationSecond) {
-      this.deplaningPhase(this.fillAndFlushTracker, animationSecond)
+      return this.deplaningPhase(this.fillAndFlushTracker, animationSecond);
     }
 
     deplaningPhase(tracker, animationSecond) {

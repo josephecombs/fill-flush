@@ -7,6 +7,7 @@ class Plane {
         this.seats = Array.from({ length: rows }, () => new Array(columns).fill(null));
         this.AVERAGE_WALK_SPEED_MILES_PER_HOUR = speed;
         this.AVERAGE_WALK_SPEED_MILES_PER_SECOND = this.AVERAGE_WALK_SPEED_MILES_PER_HOUR / 3600.0;
+        this.AVERAGE_WALK_SPEED_INCHES_PER_SECOND = this.AVERAGE_WALK_SPEED_MILES_PER_SECOND * 63360;
         this.AVERAGE_ROW_HEIGHT_INCHES = rowHeight;
         this.AVERAGE_ROW_HEIGHT_MILES = this.AVERAGE_ROW_HEIGHT_INCHES / 63360.0;
         this.timeSecondsToWalkPlane = this.calculateWalkTime();
@@ -72,8 +73,12 @@ class Plane {
         }
     }
 
+    // calculateWalkTime() {
+    //     return this.rows * this.AVERAGE_ROW_HEIGHT_MILES / this.AVERAGE_WALK_SPEED_MILES_PER_SECOND;
+    // }
+
     calculateWalkTime() {
-        return this.rows * this.AVERAGE_ROW_HEIGHT_MILES / this.AVERAGE_WALK_SPEED_MILES_PER_SECOND;
+        return this.AVERAGE_ROW_HEIGHT_INCHES * this.rows / this.AVERAGE_WALK_SPEED_INCHES_PER_SECOND;
     }
     
     disembarkCurrent() {
@@ -84,29 +89,64 @@ class Plane {
                 const assemblyTime = passenger.assemblyTimeCurrent;
                 const minBuffer = passenger.minBuffer;
                 let time;
-                
-                if (idx === 0) {
-                    if (rowIdx === 0) {
-                        // the very first person on the plane waits 0 seconds to get off
-                        time = 0;
-                    } else {
-                        time = minBuffer;
-                    }
+
+                // set the tracker stuff
+                passenger.statusQuoTracker.seatedStart = 0;
+
+                if (passenger.seat.indexOf('C') >= 0) {
+                    passenger.statusQuoTracker.seatedEnd = 0.1;
+                    passenger.statusQuoTracker.gatheringBelongingsStart = 0.1;
                 } else {
-                    time = Math.max(assemblyTime, minBuffer);
+                    passenger.statusQuoTracker.seatedEnd = totalTime;
+                    passenger.statusQuoTracker.gatheringBelongingsStart = totalTime;
                 }
 
-                totalTime += time;
-                passenger.waitTimeSecondsCurrent = totalTime;
+                passenger.statusQuoTracker.gatheringBelongingsEnd = passenger.statusQuoTracker.gatheringBelongingsStart + passenger.assemblyTimeCurrent;
+
+                passenger.statusQuoTracker.standingStoppedStart = passenger.statusQuoTracker.gatheringBelongingsEnd
+                // the very first person off the plane does not wait minBuffer for anyone in front to leave
+                if (idx === 0 && rowIdx === 0) {
+                    passenger.statusQuoTracker.standingStoppedEnd = passenger.statusQuoTracker.standingStoppedStart + 0.1;
+                    passenger.statusQuoTracker.standingWaitingStart = passenger.statusQuoTracker.standingStoppedEnd;
+                    passenger.statusQuoTracker.standingWaitingEnd = passenger.statusQuoTracker.standingWaitingStart;
+                } else if (passenger.seat.indexOf('C') >= 0) { 
+                    // account for the fact that the aisle has been standing this whole time, so they wait the minBuffer
+                    passenger.statusQuoTracker.standingStoppedEnd = totalTime + passenger.statusQuoTracker.standingStoppedStart;
+                    passenger.statusQuoTracker.standingWaitingStart = passenger.statusQuoTracker.standingStoppedEnd;
+                    passenger.statusQuoTracker.standingWaitingEnd = passenger.statusQuoTracker.standingWaitingStart + passenger.minBuffer;
+                } else {
+                    passenger.statusQuoTracker.standingStoppedEnd = passenger.statusQuoTracker.standingStoppedStart;
+                    passenger.statusQuoTracker.standingWaitingStart = passenger.statusQuoTracker.standingStoppedEnd;
+                    // look up the passenger who deplaned before within this row, in rare cases your gather belongings step will be faster than min buffer, so if there's a delta wait until the buffer is met.
+                    let precedingNeighbor = middleOutRow[idx - 1];
+                    passenger.statusQuoTracker.standingWaitingEnd = passenger.statusQuoTracker.standingWaitingStart + Math.max(passenger.minBuffer - precedingNeighbor.assemblyTimeCurrent, 0);
+                }
+                
+                passenger.statusQuoTracker.walkingStart = passenger.statusQuoTracker.standingWaitingEnd;
+                passenger.statusQuoTracker.walkingEnd = passenger.statusQuoTracker.walkingStart + this.timeSecondsToWalkPlane * (rowIdx + 1) / this.rows;
+                
+                totalTime = passenger.statusQuoTracker.walkingStart;
+                passenger.waitTimeSecondsCurrent = passenger.statusQuoTracker.walkingEnd;
             });
         });
         
         //must finally consider the amount of time it takes the last person on the plane to walk the plane
         totalTime += this.timeSecondsToWalkPlane;
 
-        // this.putSeatsIntoSeatsHash();
-        
-        return totalTime;
+        let maxWalkEndFromTrackers = 0;
+
+        this.seats.forEach((row) => {
+            row.forEach((passenger) => {
+                // ... existing code for processing passengers ...
+
+                // Update the maximum walk end time if the current passenger's walk end time is greater
+                if (passenger.statusQuoTracker.walkingEnd > maxWalkEndFromTrackers) {
+                    maxWalkEndFromTrackers = passenger.statusQuoTracker.walkingEnd;
+                }
+            });
+        });
+
+        return maxWalkEndFromTrackers;
     }
 
     disembarkFuture() {
@@ -116,30 +156,51 @@ class Plane {
             const aisle = this.seats.map(row => row[this.aisleColumns().sort().indexOf(column)]);
             const reductionFactor = 1 - wave * this.assemblyTimeWaveReductionFactor;
             const maxAssemblyTime = aisle.reduce((max, passenger) => Math.max(max, passenger.assemblyTimeFuture), 0) * reductionFactor;
-            
-            totalTime += maxAssemblyTime;
 
             aisle.forEach((passenger, idx) => {
-                if (idx === 0) {
-                    passenger.waitTimeSecondsFuture = totalTime;
+                if (wave === 0) {
+                    passenger.fillAndFlushTracker.seatedStart = 0;
+                    passenger.fillAndFlushTracker.seatedEnd = 0;    
                 } else {
-                    passenger.waitTimeSecondsFuture = aisle[idx - 1].waitTimeSecondsFuture + passenger.minBuffer;
+                    passenger.fillAndFlushTracker.seatedStart = 0;
+                    passenger.fillAndFlushTracker.seatedEnd = totalTime;
                 }
-                
+
+                passenger.fillAndFlushTracker.gatheringBelongingsStart = passenger.fillAndFlushTracker.seatedEnd;
+                passenger.fillAndFlushTracker.gatheringBelongingsEnd = passenger.fillAndFlushTracker.gatheringBelongingsStart + passenger.assemblyTimeFuture * reductionFactor;
+
+                passenger.fillAndFlushTracker.standingStoppedStart = passenger.fillAndFlushTracker.gatheringBelongingsEnd;
                 if (idx === 0) {
-                  // the first person in the aisle does not maintain a buffer
-                  totalTime += 0;
+                    passenger.fillAndFlushTracker.standingStoppedEnd = passenger.fillAndFlushTracker.standingStoppedStart + (maxAssemblyTime - (passenger.assemblyTimeFuture * reductionFactor));
+                    passenger.fillAndFlushTracker.standingWaitingStart = passenger.fillAndFlushTracker.standingStoppedEnd;
+                    passenger.fillAndFlushTracker.standingWaitingEnd = passenger.fillAndFlushTracker.standingWaitingStart;
                 } else {
-                  totalTime += passenger.minBuffer;
+                    passenger.fillAndFlushTracker.standingStoppedEnd = aisle[idx - 1].fillAndFlushTracker.walkingStart;
+                    passenger.fillAndFlushTracker.standingWaitingStart = passenger.fillAndFlushTracker.standingStoppedEnd;
+                    passenger.fillAndFlushTracker.standingWaitingEnd = passenger.fillAndFlushTracker.standingWaitingStart + passenger.minBuffer;
                 }
+
+                passenger.fillAndFlushTracker.walkingStart = passenger.fillAndFlushTracker.standingWaitingEnd;
+                passenger.fillAndFlushTracker.walkingEnd = passenger.fillAndFlushTracker.walkingStart + this.timeSecondsToWalkPlane * (idx + 1) / this.rows;          
+                passenger.waitTimeSecondsFuture = passenger.fillAndFlushTracker.walkingEnd
             });
 
-            totalTime += this.timeSecondsToWalkPlane;
+            totalTime = aisle[this.rows - 1].fillAndFlushTracker.walkingEnd;
         });
 
-        // this.putSeatsIntoSeatsHash();
+        let maxWalkEndFromTrackers = 0;
+        this.seats.forEach((row) => {
+            row.forEach((passenger) => {
+                // ... existing code for processing passengers ...
 
-        return totalTime;
+                // Update the maximum walk end time if the current passenger's walk end time is greater
+                if (passenger.fillAndFlushTracker.walkingEnd > maxWalkEndFromTrackers) {
+                    maxWalkEndFromTrackers = passenger.fillAndFlushTracker.walkingEnd;
+                }
+            });
+        });
+
+        return maxWalkEndFromTrackers;
     }
 
     aisleColumns() {

@@ -40,25 +40,64 @@ class CurrentAnimation extends Component {
 
     // construct some aisle object by iterating through the passengers and their attributes
 
+    // figure out which passengers are in the aisle here. for now, just put the passengers in states of:
+    // gatheringBelongings, standingStopped, standingWaiting into the constructedAisle in the correct position. 
+    // if there's nobody in the aisle in that position, leave the element blank. 
+    // the constructedAisle should have as many entries as the rows of the plane itself
+
+    let constructedAisle = new Array(plane.rows).fill(null); // Initialize the aisle with null (empty)
+
+    plane.seats.forEach((row, rowIndex) => {
+      row.forEach((passenger) => {
+        const deplaningPhase = passenger.statusQuoDeplaningPhase(animationSecond);
+    
+        // Check if the passenger is in one of the phases corresponding to being in the aisle
+        if (['gatheringBelongings', 'standingStopped', 'standingWaiting'].includes(deplaningPhase)) {
+          constructedAisle[rowIndex] = passenger; // Place the passenger in the aisle at the corresponding row position
+        }
+
+        if (['walking'].includes(deplaningPhase)) {
+          let approximateAislePosition = rowIndex;
+
+          let secondsSinceWalkStart = animationSecond - passenger.statusQuoTracker.walkingStart;
+          let timeWalking = passenger.statusQuoTracker.walkingEnd - passenger.statusQuoTracker.walkingStart;
+
+          let proportionComplete = secondsSinceWalkStart / timeWalking;
+          let proportionRemaining = 1 - proportionComplete;
+
+          approximateAislePosition = Math.round(rowIndex * proportionRemaining)
+
+          constructedAisle[approximateAislePosition] = passenger; // Place the passenger in the aisle at the corresponding row position
+        }
+      });
+    });                
+
     const rows = plane.seats.map((row, rowIndex) => (
       <div key={rowIndex} className="row">
         <div className="row-label">{rowIndex + 1}</div>
         {seatArrangement.map((seatLabel, seatIndex) => {
 
           let displayedSeatKey = '';
+          let aisleThingy = 'A';
 
           if (seatLabel !== '||') {
             const seatKey = `${seatLabel}${rowIndex + 1}`;
-            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]} deplaningPhase={'seated'}/>; // Use the Passenger component
+            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]} deplaningPhase={'seated'}/>;
 
             if (plane.seatsHash[seatKey].waitTimeSecondsCurrent < animationSecond) {
               displayedSeatKey = seatKey;
+            }
+          } else {
+            if (constructedAisle[rowIndex]) {
+              aisleThingy = <Passenger passenger={constructedAisle[rowIndex]} deplaningPhase={constructedAisle[rowIndex].statusQuoDeplaningPhase(animationSecond)}/>;
+            } else {
+              aisleThingy = 'I';
             }
           }
 
           return (
             <div key={`${rowIndex}-${seatIndex}`} className={`seat ${seatLabel === '||' ? 'aisle' : ''}`}>
-              {seatLabel !== '||' ? displayedSeatKey : ''}
+              {seatLabel !== '||' ? displayedSeatKey : aisleThingy}
             </div>
           );
         })}
