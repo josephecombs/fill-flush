@@ -56,14 +56,12 @@ class SimulatePage extends React.Component {
       } else {
         // If the animation was paused, start it
         clearInterval(this.animationInterval);
-        this.animationInterval = setInterval(() => {
-          this.setState(prevState => ({ animationSecond: prevState.animationSecond + 1 }));
-        }, 250);
+        this.animationInterval = setInterval(this.updateAnimation, 250);
         return { isAnimating: true };
       }
     });
-  }
-
+  };
+  
   runSimulation = () => {
     if (this.animationInterval) {
       clearInterval(this.animationInterval);
@@ -104,13 +102,23 @@ class SimulatePage extends React.Component {
       const newQueryString = qs.stringify(stateForUrl);
       
       if (this.state.isAnimating) {
-        this.animationInterval = setInterval(() => {
-          this.setState(prevState => ({ animationSecond: prevState.animationSecond + 1 }));
-        }, 250);
+        this.animationInterval = setInterval(this.updateAnimation, 250);
       }
-            
+
       window.history.pushState({}, '', `?${newQueryString}`);
     });
+  }
+
+  updateAnimation = () => {
+    const { animationSecond, timeCurrent, timeFuture } = this.state;
+    if (animationSecond >= Math.max(timeCurrent, timeFuture)) {
+      // Stop the animation if surpassing the max time
+      clearInterval(this.animationInterval);
+      this.setState({ isAnimating: false });
+    } else {
+      // Otherwise, continue the animation
+      this.setState(prevState => ({ animationSecond: prevState.animationSecond + 1 }));
+    }
   }
   
   formatTime = (timeInSeconds) => {
