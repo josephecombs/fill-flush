@@ -8,6 +8,31 @@ class Passenger {
         this.minBuffer = Math.max(this.normalDistribution(2), 0);
         this.waitTimeSecondsCurrent = 0;
         this.waitTimeSecondsFuture = 0;
+
+        this.statusQuoTracker = {
+          seatedStart: 0,
+          seatedEnd: 0,
+          gatheringBelongingsStart: 0,
+          gatheringBelongingsEnd: 0,
+          standingStoppedStart: 0,
+          standingStoppedEnd: 0,
+          standingWaitingStart: 0,
+          standingWaitingEnd: 0,
+          walkingStart: 0,
+          walkingEnd: 0,
+        };
+        this.fillAndFlushTracker = {
+          seatedStart: 0,
+          seatedEnd: 0,
+          gatheringBelongingsStart: 0,
+          gatheringBelongingsEnd: 0,
+          standingStoppedStart: 0,
+          standingStoppedEnd: 0,
+          standingWaitingStart: 0,
+          standingWaitingEnd: 0,
+          walkingStart: 0,
+          walkingEnd: 0,
+        }
     }
 
     // Seeded random number generator using Mulberry32 algorithm

@@ -38,6 +38,8 @@ class CurrentAnimation extends Component {
       </div>
     ));
 
+    // construct some aisle object by iterating through the passengers and their attributes
+
     const rows = plane.seats.map((row, rowIndex) => (
       <div key={rowIndex} className="row">
         <div className="row-label">{rowIndex + 1}</div>
@@ -47,7 +49,7 @@ class CurrentAnimation extends Component {
 
           if (seatLabel !== '||') {
             const seatKey = `${seatLabel}${rowIndex + 1}`;
-            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]}/>; // Use the Passenger component
+            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]} deplaningPhase={'seated'}/>; // Use the Passenger component
 
             if (plane.seatsHash[seatKey].waitTimeSecondsCurrent < animationSecond) {
               displayedSeatKey = seatKey;
@@ -81,7 +83,11 @@ class CurrentAnimation extends Component {
             <div className="gutter-label">Off Plane:</div>
             <div>
               {offPlanePassengers.map((passenger, index) => (
-                <Passenger key={index} passenger={passenger} />
+                <Passenger 
+                  key={index} 
+                  passenger={passenger} 
+                  deplaningPhase={'exited'}
+                />
               ))}
             </div>
           </div>

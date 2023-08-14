@@ -47,7 +47,7 @@ class FutureAnimation extends Component {
 
           if (seatLabel !== '||') {
             const seatKey = `${seatLabel}${rowIndex + 1}`;
-            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]}/>; // Use the Passenger component
+            displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]} deplaningPhase={'seated'}/>; // Use the Passenger component
 
             if (plane.seatsHash[seatKey].waitTimeSecondsFuture < animationSecond) {
               displayedSeatKey = seatKey;
@@ -81,7 +81,11 @@ class FutureAnimation extends Component {
             <div className="gutter-label">Off Plane:</div>
             <div>
               {offPlanePassengers.map((passenger, index) => (
-                <Passenger key={index} passenger={passenger} />
+                <Passenger 
+                  key={index} 
+                  passenger={passenger} 
+                  deplaningPhase={'exited'}
+                />
               ))}
             </div>
           </div>
