@@ -54,7 +54,9 @@ function HomePage() {
           <li>How to educate passengers</li>
           <li>How to accommodate the elderly, people with children, and groups.</li>
           <li>Challenges in modeling randomness in gathering belongings and walking behavior.</li>
-          <li>Considerations for large international flights, first-class passengers, and potential inter-passenger conflict.</li>
+          <li>Considerations for 2-aisle large international flights, first-class passengers, and potential inter-passenger conflict.</li>
+          <li>How First-Class is handled.</li>
+          <li>Political Economy questions - who wins and who loses? Potential inter-passenger conflict.</li>
         </ul>
       </section>
 
