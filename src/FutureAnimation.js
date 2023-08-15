@@ -74,7 +74,7 @@ class FutureAnimation extends Component {
           let aisleTile = 'A';
 
           if (seatLabel !== '||') {
-            const seatKey = `${seatLabel}${rowIndex + 1}`;
+            const seatKey = `${rowIndex + 1}${seatLabel}`;
             displayedSeatKey = <Passenger passenger={plane.seatsHash[seatKey]} deplaningPhase={'seated'}/>;
 
             if (plane.seatsHash[seatKey].fillAndFlushDeplaningPhase(animationSecond) !== 'seated') {

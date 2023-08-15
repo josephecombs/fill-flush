@@ -28,7 +28,7 @@ class Plane {
         this.seats.forEach((row, i) => {
             row.forEach((_, j) => {
                 const isAisleSeat = this.columnLabel(j) === 'C';
-                const seatLabel = `${this.columnLabel(j)}${i + 1}`;
+                const seatLabel = `${i + 1}${this.columnLabel(j)}`;
                 // we can take 10 random samples inside Passenger without overlap. not sure if this is necessary or not. pretty low cost.
                 let curPassenger = new Passenger(isAisleSeat, seatLabel, this.seed + (10 * count));
                 this.seats[i][j] = curPassenger;
