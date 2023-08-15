@@ -63,7 +63,7 @@ function HomePage() {
 
       <section className="conclusion">
         <h2>Conclusion</h2>
-        <p>The <em>Fill and Flush</em> deplaning method is a groundbreaking approach to aircraft deplaning. By employing a systematic fill-and-flush process, it streamlines passenger flow, enhances efficiency, and represents a significant advancement in the field of commercial aviation.</p>
+        <p>The <em>Fill and Flush</em> deplaning method is a groundbreaking approach to aircraft deplaning. If you are an airline executive or otherwise in a position to trial this system in real-world situations, please reach out.</p>
       </section>
 
       <p>Contribute: This website is deployed as a GitHub page. Please contribute to it by opening issues and making pull requests <a href="https://github.com/josephecombs/fill-flush/">here</a>.</p>
