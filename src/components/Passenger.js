@@ -20,9 +20,9 @@ const Passenger = ({ passenger, deplaningPhase }) => {
   let emoji;
   switch (deplaningPhase) {
     case 'seated': emoji = '🧘'; break;
-    case 'gatheringBelongings': emoji = '🧍🧳'; break;
+    case 'gatheringBelongings': emoji = '🧳'; break;
     case 'standingStopped': emoji = '🧍'; break;
-    case 'standingWaiting': emoji = '🧍🕐'; break;
+    case 'standingWaiting': emoji = '🕐'; break;
     case 'walking': emoji = '🚶'; break;
     case 'exited': emoji = '😃'; break;
     default: emoji = '🧑';

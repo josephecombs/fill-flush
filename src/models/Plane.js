@@ -88,14 +88,13 @@ class Plane {
             middleOutRow.forEach((passenger, idx) => {
                 const assemblyTime = passenger.assemblyTimeCurrent;
                 const minBuffer = passenger.minBuffer;
-                let time;
 
                 // set the tracker stuff
                 passenger.statusQuoTracker.seatedStart = 0;
 
                 if (passenger.seat.indexOf('C') >= 0) {
-                    passenger.statusQuoTracker.seatedEnd = 0.1;
-                    passenger.statusQuoTracker.gatheringBelongingsStart = 0.1;
+                    passenger.statusQuoTracker.seatedEnd = 0;
+                    passenger.statusQuoTracker.gatheringBelongingsStart = 0;
                 } else {
                     passenger.statusQuoTracker.seatedEnd = totalTime;
                     passenger.statusQuoTracker.gatheringBelongingsStart = totalTime;
@@ -106,18 +105,19 @@ class Plane {
                 passenger.statusQuoTracker.standingStoppedStart = passenger.statusQuoTracker.gatheringBelongingsEnd
                 // the very first person off the plane does not wait minBuffer for anyone in front to leave
                 if (idx === 0 && rowIdx === 0) {
-                    passenger.statusQuoTracker.standingStoppedEnd = passenger.statusQuoTracker.standingStoppedStart + 0.1;
+                    passenger.statusQuoTracker.standingStoppedEnd = passenger.statusQuoTracker.standingStoppedStart;
                     passenger.statusQuoTracker.standingWaitingStart = passenger.statusQuoTracker.standingStoppedEnd;
                     passenger.statusQuoTracker.standingWaitingEnd = passenger.statusQuoTracker.standingWaitingStart;
                 } else if (passenger.seat.indexOf('C') >= 0) { 
                     // account for the fact that the aisle has been standing this whole time, so they wait the minBuffer
-                    passenger.statusQuoTracker.standingStoppedEnd = totalTime + passenger.statusQuoTracker.standingStoppedStart;
+                    passenger.statusQuoTracker.standingStoppedEnd = totalTime;
                     passenger.statusQuoTracker.standingWaitingStart = passenger.statusQuoTracker.standingStoppedEnd;
                     passenger.statusQuoTracker.standingWaitingEnd = passenger.statusQuoTracker.standingWaitingStart + passenger.minBuffer;
                 } else {
                     passenger.statusQuoTracker.standingStoppedEnd = passenger.statusQuoTracker.standingStoppedStart;
                     passenger.statusQuoTracker.standingWaitingStart = passenger.statusQuoTracker.standingStoppedEnd;
                     // look up the passenger who deplaned before within this row, in rare cases your gather belongings step will be faster than min buffer, so if there's a delta wait until the buffer is met.
+
                     let precedingNeighbor = middleOutRow[idx - 1];
                     passenger.statusQuoTracker.standingWaitingEnd = passenger.statusQuoTracker.standingWaitingStart + Math.max(passenger.minBuffer - precedingNeighbor.assemblyTimeCurrent, 0);
                 }
@@ -125,7 +125,7 @@ class Plane {
                 passenger.statusQuoTracker.walkingStart = passenger.statusQuoTracker.standingWaitingEnd;
                 passenger.statusQuoTracker.walkingEnd = passenger.statusQuoTracker.walkingStart + this.timeSecondsToWalkPlane * (rowIdx + 1) / this.rows;
                 
-                totalTime = passenger.statusQuoTracker.walkingStart;
+                totalTime = passenger.statusQuoTracker.walkingStart; //if this is the last member of a row, this will be used to establish standingStoppedEnd of the first aisle member of the next row
                 passenger.waitTimeSecondsCurrent = passenger.statusQuoTracker.walkingEnd;
             });
         });

@@ -23,9 +23,9 @@ describe('Plane', () => {
       plane.seats[i][0] = passenger;
     }
     
-    //the wait for the first person on the plane in this situation will be zero
+    //the wait for the first person on the plane in this situation will be the time it takes them to gather their belongings
     //assume the whole column is standing and has gotten their stuff ready while jet bridge is getting ready
-    const firstPersonWaitTime = 0;
+    const firstPersonWaitTime = 5;
     
     expect(plane.disembarkCurrent()).toBe(
       firstPersonWaitTime + ((plane.rows - 1) * fixedMinBuffer) + plane.calculateWalkTime()
@@ -51,7 +51,13 @@ describe('Plane', () => {
     for (let i = 0; i < plane.rows; i++) {
       for (let j = 0; j < plane.columns; j++) {
         // Create a new Passenger with a known assembly time
-        const passenger = new Passenger(j === plane.columns - 1, `${i+1}${String.fromCharCode(65 + j)}`);
+
+        let colCharacter = 'C'
+        if (j === 1) {
+          colCharacter = 'D'
+        };
+
+        const passenger = new Passenger(j === plane.columns - 1, `${i+1}${colCharacter}`);
         passenger.assemblyTimeCurrent = fixedAssemblyTime;
         passenger.assemblyTimeFuture = fixedAssemblyTime;
         passenger.minBuffer = fixedMinBuffer;
@@ -67,7 +73,8 @@ describe('Plane', () => {
     // make sure to consider reductionFactor in this calculation - assembly time goes down in each wave
     const initialBufferTime2 = Math.max(...plane.seats.map(row => row[plane.columns - 1].assemblyTimeFuture)) * (1 - plane.assemblyTimeWaveReductionFactor * (plane.columns - 1));
     
-    const firstPersonWaitTime = 0;
+    // as in the other scenario, the first passenger delays everyone else by 5 seconds
+    const firstPersonWaitTime = 5;
     
     const expectedTimeCurrent = firstPersonWaitTime + ((plane.rows - 1) * fixedMinBuffer) + ((plane.columns - 1) * plane.rows * fixedAssemblyTime) + plane.calculateWalkTime();
     
