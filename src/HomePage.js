@@ -57,6 +57,7 @@ function HomePage() {
           <li>Considerations for 2-aisle large international flights, first-class passengers, and potential inter-passenger conflict.</li>
           <li>How First Class is handled.</li>
           <li>Political Economy questions - who wins and who loses? Potential inter-passenger conflict.</li>
+          <li>How to train the flight attendant who will be the orchestrator of this process.</li>
         </ul>
       </section>
 
