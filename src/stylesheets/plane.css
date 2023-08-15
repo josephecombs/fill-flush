@@ -34,8 +34,21 @@
     font-size: 10px;
   }
 
+  .row-label {
+    margin-right: 0px;
+    display: block;
+  }
+
   .planes-container {
     justify-content: normal !important;
+    width: 100vw !important;
+  }
+
+  .exited-passengers {
+    max-width: 150px !important;
+  }
+  .plane-container {
+    width: 50vw;
   }
 }
 
@@ -73,7 +86,7 @@
 
 .plane-container {
   /* display: inline-block; */
-  max-width: 45%;
+  max-width: 50%;
 }
 
 .planes-container {
