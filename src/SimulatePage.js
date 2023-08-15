@@ -79,7 +79,17 @@ class SimulatePage extends React.Component {
     const timeCurrent = plane.disembarkCurrent();
     const timeFuture = plane.disembarkFuture();
     
-    const avgSecSaved = (timeCurrent - timeFuture) / 2;
+    // const avgSecSaved = (timeCurrent - timeFuture) / 2;
+
+    let totalSecSaved = 0;
+    plane.seats.forEach(row => {
+      row.forEach(passenger => {
+        const timeSaved = passenger.fillAndFlushBenefit();
+        totalSecSaved += timeSaved;
+      });  
+    });
+
+    const avgSecSaved = totalSecSaved / (plane.rows * plane.columns);
 
     this.setState({
       plane: plane,
@@ -183,7 +193,7 @@ class SimulatePage extends React.Component {
               <tbody>
                 <tr>
                   <td><label>Avg. Seconds Saved per Passenger:</label></td>
-                  <td><input type="number" value={Math.round(this.state.avgSecSavedPerPassenger)} onChange={e => this.setState({ avgSecSavedPerPassenger: e.target.value })} /></td>
+                  <td>{Math.round(this.state.avgSecSavedPerPassenger)}</td>
                 </tr>
                 <tr>
                   <td><label>Passenger Flights per Year (USA):</label></td>

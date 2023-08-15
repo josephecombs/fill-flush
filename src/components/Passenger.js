@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Passenger = ({ passenger, deplaningPhase }) => {
-  const benefitValue = passenger.statusQuoBenefit();
+  const benefitValue = passenger.fillAndFlushBenefit();
   const benefitLabel = benefitValue < 0 ? 'Penalty' : 'Benefit';
   const absoluteBenefitValue = Math.abs(benefitValue);
 

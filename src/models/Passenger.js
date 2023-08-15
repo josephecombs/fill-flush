@@ -37,7 +37,7 @@ class Passenger {
         }
     }
 
-    statusQuoBenefit() {
+    fillAndFlushBenefit() {
       return Math.round(this.statusQuoTracker.walkingEnd - this.fillAndFlushTracker.walkingEnd);
     }
 
