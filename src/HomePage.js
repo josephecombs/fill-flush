@@ -23,7 +23,7 @@ function HomePage() {
 
         <h3>1. <em>Fill</em> Phase:</h3>
         <ul>
-          <li><strong>Column-by-Column Direction:</strong> A flight attendant directs the most aisle-adjacent column of passengers to stand and <em>Fill</em> the aisle. This is done one column at a time, in a middle-out pattern.</li>
+          <li><strong>Column-by-Column Process:</strong> A flight attendant, via in-flight announcements, directs the most aisle-adjacent column of passengers to stand and <em>Fill</em> the aisle. This is done one column at a time, in a middle-out pattern.</li>
           <li><strong>Gathering Belongings:</strong> Passengers in the aisle gather their belongings from overhead compartments or under seats. Meanwhile, those not in the called column wait for their wave.</li>
           <li><strong>Waiting:</strong> Once all passengers in the current column have gathered their belongings, they wait until the entire column is ready. If a passenger is not ready, they must stay in their seat and exit in a subsequent flush.</li>
         </ul>

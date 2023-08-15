@@ -28,6 +28,17 @@
   justify-content: center;
 }
 
+@media only screen and (max-width: 428px) {
+  .seat, .row-label {
+    width: 20px;
+    font-size: 10px;
+  }
+
+  .planes-container {
+    justify-content: normal !important;
+  }
+}
+
 .aisle {
   border: none;
   width: 20px; /* Define the width of the aisle */
@@ -42,10 +53,17 @@
 }
 
 .gutter {
-  display: flex;
-  flex-wrap: wrap;
-  width: 200px; /* You can adjust the width to match the plane's width */
+  min-width: 100px; /* You can adjust the width to match the plane's width */
+  max-width: 100%; /* You can adjust the width to match the plane's width */
   border: 1px solid #ccc; /* Optional, to visualize the gutter */
+}
+
+.gutter-label {
+  text-align: center;
+}
+
+.exited-passengers {
+  max-width: 180px;
 }
 
 .passenger-off-plane {

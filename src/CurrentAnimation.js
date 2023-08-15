@@ -91,7 +91,7 @@ class CurrentAnimation extends Component {
             if (constructedAisle[rowIndex]) {
               aisleTile = <Passenger passenger={constructedAisle[rowIndex]} deplaningPhase={constructedAisle[rowIndex].statusQuoDeplaningPhase(animationSecond)}/>;
             } else {
-              aisleTile = 'I';
+              aisleTile = '↑';
             }
           }
 
@@ -111,7 +111,7 @@ class CurrentAnimation extends Component {
 
     return (
       <div className="plane-container">
-        <div className="simulation-heading">Status Quo System:</div>
+        <div className="simulation-heading">Status Quo:</div>
         <div className="plane" id="current-animation">
           <div className="row column-labels">
             <div className="row-label top-left">Z</div>
@@ -120,7 +120,7 @@ class CurrentAnimation extends Component {
           {rows}
           <div className="gutter">
             <div className="gutter-label">Off Plane:</div>
-            <div>
+            <div className="exited-passengers">
               {offPlanePassengers.map((passenger, index) => (
                 <Passenger 
                   key={index} 

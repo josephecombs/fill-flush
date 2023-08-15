@@ -65,8 +65,6 @@ class FutureAnimation extends Component {
       });
     });
 
-    console.log(constructedAisle);
-
     const rows = plane.seats.map((row, rowIndex) => (
       <div key={rowIndex} className="row">
         <div className="row-label">{rowIndex + 1}</div>
@@ -86,7 +84,7 @@ class FutureAnimation extends Component {
             if (constructedAisle[rowIndex]) {
               aisleTile = <Passenger passenger={constructedAisle[rowIndex]} deplaningPhase={constructedAisle[rowIndex].fillAndFlushDeplaningPhase(animationSecond)}/>;
             } else {
-              aisleTile = 'I';
+              aisleTile = '↑';
             }
           }
 
@@ -106,7 +104,7 @@ class FutureAnimation extends Component {
 
     return (
       <div className="plane-container">
-        <div className="simulation-heading">FILL AND FLUSH System:</div>
+        <div className="simulation-heading"><em>Fill and Flush</em>:</div>
         <div className="plane" id="current-animation">
           <div className="row column-labels">
             <div className="row-label top-left">Z</div>
@@ -115,7 +113,7 @@ class FutureAnimation extends Component {
           {rows}
           <div className="gutter">
             <div className="gutter-label">Off Plane:</div>
-            <div>
+            <div className="exited-passengers">
               {offPlanePassengers.map((passenger, index) => (
                 <Passenger 
                   key={index} 
