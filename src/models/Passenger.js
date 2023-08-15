@@ -2,12 +2,12 @@ class Passenger {
     constructor(isAisleSeat, seat, seed) {
         this.seat = seat;
         this.seeds = this.generateSeeds(seed);
-        // const assemblyTime = Math.max(this.normalDistribution(5, 1.5), 0);
-        const assemblyTime = 5;
+        const assemblyTime = Math.max(this.normalDistribution(5, 1.5), 0);
+        // const assemblyTime = 5;
         this.assemblyTimeCurrent = false ? 0 : assemblyTime;
         this.assemblyTimeFuture = assemblyTime + 2;
-        // this.minBuffer = Math.max(this.normalDistribution(2), 0);
-        this.minBuffer = 2;
+        this.minBuffer = Math.max(this.normalDistribution(2), 0);
+        // this.minBuffer = 2;
         this.waitTimeSecondsCurrent = 0;
         this.waitTimeSecondsFuture = 0;
 
