@@ -78,8 +78,6 @@ class SimulatePage extends React.Component {
 
     const timeCurrent = plane.disembarkCurrent();
     const timeFuture = plane.disembarkFuture();
-    
-    // const avgSecSaved = (timeCurrent - timeFuture) / 2;
 
     let totalSecSaved = 0;
     plane.seats.forEach(row => {
