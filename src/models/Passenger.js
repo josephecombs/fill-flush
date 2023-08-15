@@ -35,6 +35,10 @@ class Passenger {
         }
     }
 
+    statusQuoBenefit() {
+      return Math.round(this.statusQuoTracker.walkingEnd - this.fillAndFlushTracker.walkingEnd);
+    }
+
     statusQuoDeplaningPhase(animationSecond) {
       return this.deplaningPhase(this.statusQuoTracker, animationSecond);
     }

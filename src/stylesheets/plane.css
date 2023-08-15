@@ -79,6 +79,10 @@
   max-width: 180px;
 }
 
+.exited-passengers .passenger-container {
+  display: inline-block;
+}
+
 .passenger-off-plane {
   width: 30px; /* Adjust to the width of a seat */
   height: 30px; /* Adjust to the height of a seat */

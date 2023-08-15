@@ -160,6 +160,7 @@ class SimulatePage extends React.Component {
           
             <div id="simulation-player-controls">
               <div>Simulation at {this.state.animationSecond} Seconds</div>
+              <div className='player-disclaimer'>Playing at 4x real-time</div>
 
               <button className="animation-button" onClick={this.toggleAnimation}>
                 {this.state.isAnimating ? 'Pause' : 'Start'} Animation

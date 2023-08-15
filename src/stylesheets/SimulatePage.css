@@ -79,8 +79,64 @@
   flex-direction: column;
 }
 
+.player-disclaimer {
+  font-size: 10px;
+}
+
 #simulation-statistics p {
   text-align: center;
   max-width: 100vw;
   word-wrap: break-word;
 }
+
+@media only screen and (max-width: 428px) {
+  .passenger-tooltip {
+    position: fixed !important; /* Fixed positioning to place it relative to the viewport */
+    top: 50% !important; /* Center vertically */
+    left: 50% !important; /* Center horizontally */
+    transform: translate(-50%, -50%) !important; /* Adjust for exact centering */
+    z-index: 1000 !important; /* High z-index to ensure it appears above other elements */
+    max-width: calc(100% - 20px) !important; /* Provide some margin */
+    white-space: normal !important; /* Allow wrapping */
+    height: 100px;
+    width: 250px;
+    font-size: 16px;
+  }
+}
+
+.passenger-container {
+  position: relative;
+  cursor: pointer;
+  display: inline-block; /* Allow the container to fit its content */
+}
+
+.passenger-tooltip {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position the tooltip above the text */
+  left: 50%;
+  transform: translateX(-50%); /* Center the tooltip */
+  opacity: 0;
+  min-width: 300px; /* Minimum width, you can adjust this */
+  max-width: calc(100vw - 20px); /* Maximum width, considering some margin */
+  white-space: normal; /* Allow text to wrap to the next line */
+  word-wrap: break-word; /* Break words if necessary to prevent overflow */
+  transition: opacity 0.3s;
+  font-size: 12px;
+}
+
+.passenger-container:hover .passenger-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+
+
+
