@@ -44,25 +44,23 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <FlightLandIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Link to="/" className="link-logo">
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Fill & Flush🚽
-            </Typography>
-          </Link>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            Fill & Flush🚽
+          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -102,7 +100,7 @@ function Header() {
             </Menu>
           </Box>
           <FlightLandIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Link to='/' className="link-logo">
+          {/* <Link to='/' className="link-logo"> */}
             <Typography
               variant="h5"
               noWrap
@@ -121,7 +119,7 @@ function Header() {
             >
               LOGO
             </Typography>
-          </Link>
+          {/* </Link> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Link to={`/${page.toLowerCase()}`} key={page} style={{ textDecoration: 'none' }}>
