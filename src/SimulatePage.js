@@ -108,6 +108,18 @@ class SimulatePage extends React.Component {
         seed: this.state.seed,
       };
       const newQueryString = qs.stringify(stateForUrl);
+
+        // Fire a custom Google Analytics event with the parameters
+      window.gtag('event', 'run_simulation', {
+        'event_category': 'Simulation',
+        'event_label': 'Run Simulation',
+        'rows': this.state.rows,
+        'columns': this.state.columns,
+        'averageWalkSpeedMph': this.state.averageWalkSpeedMph,
+        'averageRowHeightInches': this.state.averageRowHeightInches,
+        'seed': this.state.seed
+      });
+
       
       if (this.state.isAnimating) {
         this.animationInterval = setInterval(this.updateAnimation, 250);
