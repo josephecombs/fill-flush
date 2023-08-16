@@ -9,7 +9,11 @@ function HomePage() {
 
       <section className="intro">
         <h2>Introduction</h2>
-        <p>The <em>Fill & Flush</em> deplaning method was developed to revolutionize the way passengers exit aircraft. This method minimizes total deplaning time by maximizing aisle space utilization. <Link to="/simulate">Explore the simulator</Link> to see how it works.</p>
+        <p>The <em>Fill & Flush</em> deplaning method was developed to revolutionize the way passengers exit aircraft. This method minimizes total deplaning time by maximizing aisle space utilization. Just want to see the plan in action? Click below!</p>
+
+        <div className="simulate-button-container">
+          <Link to="/simulate" className="simulate-button">Start Simulating Now!</Link>
+        </div>
       </section>
 
       <section className="status-quo">

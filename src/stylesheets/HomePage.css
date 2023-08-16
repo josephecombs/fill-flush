@@ -70,3 +70,22 @@ body {
 .footer a:hover {
   text-decoration: underline;
 }
+
+.simulate-button-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.simulate-button {
+  background-color: orange !important;
+  color: white;
+  font-size: 20px;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.simulate-button:hover {
+  background-color: darkorange !important;
+}
