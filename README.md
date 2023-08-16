@@ -1,7 +1,7 @@
 # Purpose of this project
 The process of exiting a plane can be dramatically improved. This project exists to prove that fact.
 
-I've called the process "Fill and Flush" to represent the way the limited resource, plane aisle space, can be more effectively used by "filling" the aisle, then "flushing" the aisle.
+I've called the process "Fill & Flush" to represent the way the limited resource, plane aisle space, can be more effectively used by "filling" the aisle, then "flushing" the aisle.
 
 # High Level Individual De-Planing Lifecycle:
 - plane connects to jetbridge, and passengers are allowed to stand
@@ -9,13 +9,13 @@ I've called the process "Fill and Flush" to represent the way the limited resour
 - passenger stands idle for some period of time (sometimes 0 seconds in status quo, if they're in a window seat)
 - person in front of passenger leaves
 - passenger places some time buffer between themselves and aisle neighbor
-- passenger walks plane
+- passenger walks plane with belongings
 
 # Order of deplaning (current):
 - Deplaning order is row by row in quasi middle out - 1C -> 1B -> 1A -> 1D -> 1E -> 1F -> 2C...
 
 # Order of deplaning (future):
-- Deplaning order is column by column, middle out - 1C -> C2 -> ... -> C60 -> 1E -> 1F -> 2C...
+- Deplaning order is column by column, middle out - 1C -> 2C -> ... -> 60C -> 1D -> ... -> 1F ...
 
 # (TODO) Addressing various objections:
 - what about the elderly and people with children?
@@ -28,7 +28,7 @@ I've called the process "Fill and Flush" to represent the way the limited resour
 - how to model the randomness of time:
   - it takes to gather belongings
   - any one passenger places as a buffer between themselves and the person leaving ahead of them
-- should there really a "gather belongings" penalty in fill & flush. i.e. - do you actually take longer to gather belongings with aisle neighbors relative to status quo? if there is, what's the discount in later flushes (currently 5% speedup for each wave - less baggage in overhead)
+- should there really a "gather belongings" penalty in Fill & Flush. i.e. - do you actually take longer to gather belongings with aisle neighbors relative to status quo? if there is, what's the discount in later flushes (currently 5% speedup for each wave - less baggage in overhead)
 - what about massive international flights with 2 exit rows?
 - what about first class?
   - you can still let them off first and apply this system in coach and get the improvement
