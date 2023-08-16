@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 function HomePage() {
   return (
     <div className="homepage-container">
-      <h1>Welcome to the <em>Fill and Flush</em> Deplaning Simulator!</h1>
+      <h1>Welcome to the <em>Fill & Flush</em> Deplaning Simulator!</h1>
 
       <section className="intro">
         <h2>Introduction</h2>
-        <p>The <em>Fill and Flush</em> deplaning method was developed to revolutionize the way passengers exit aircraft. This method minimizes total deplaning time by maximizing aisle space utilization. <Link to="/simulate">Explore the simulator</Link> to see how it works.</p>
+        <p>The <em>Fill & Flush</em> deplaning method was developed to revolutionize the way passengers exit aircraft. This method minimizes total deplaning time by maximizing aisle space utilization. <Link to="/simulate">Explore the simulator</Link> to see how it works.</p>
       </section>
 
       <section className="status-quo">
@@ -18,8 +18,8 @@ function HomePage() {
       </section>
 
       <section className="fill-and-flush">
-        <h2><em>Fill and Flush</em> Method</h2>
-        <p>The <em>Fill and Flush</em> method represents a breakthrough in deplaning, involving distinct phases of <em>Fill</em>ing the aisle, gathering belongings, and columnar exit (<em>Flush</em>). Here's how it works:</p>
+        <h2><em>Fill & Flush</em> Method</h2>
+        <p>The <em>Fill & Flush</em> method represents a breakthrough in deplaning, involving distinct phases of <em>Fill</em>ing the aisle, gathering belongings, and columnar exit (<em>Flush</em>). Here's how it works:</p>
 
         <h3>1. <em>Fill</em> Phase:</h3>
         <ul>
@@ -39,13 +39,13 @@ function HomePage() {
           <li><strong>Waves of Passengers:</strong> The process repeats until all columns have exited. Passengers wishing to deplane as a group skip earlier <em>Flushes</em> and make trades if available with passengers not in groups.</li>
         </ul>
 
-        <p>The <em>Fill and Flush</em> method's structured approach ensures that the aisle space is maximally utilized.</p>
+        <p>The <em>Fill & Flush</em> method's structured approach ensures that the aisle space is maximally utilized.</p>
       </section>
 
       <section className="superiority">
-        <h2>Why <em>Fill and Flush</em> is Superior</h2>
-        <p><strong>In simulation, <em>Fill and Flush</em> reduces deplaning time by approximately 50%</strong></p>
-        <p><em>Fill and Flush</em> reduces deplaning time by making better use of the aisle space and coordinating passenger movement. Unlike the traditional method, where passengers gather belongings one at a time, causing a slow, continuous line, the <em>Fill and Flush</em> method allows passengers to prepare to exit in groups. This is like having multiple checkout lanes at a grocery store instead of just one, allowing more people to be served at the same time. It leads to a quicker and more efficient deplaning process.</p>
+        <h2>Why <em>Fill & Flush</em> is Superior</h2>
+        <p><strong>In simulation, <em>Fill & Flush</em> reduces deplaning time by approximately 50%</strong></p>
+        <p><em>Fill & Flush</em> reduces deplaning time by making better use of the aisle space and coordinating passenger movement. Unlike the traditional method, where passengers gather belongings one at a time, causing a slow, continuous line, the <em>Fill & Flush</em> method allows passengers to prepare to exit in groups. This is like having multiple checkout lanes at a grocery store instead of just one, allowing more people to be served at the same time. It leads to a quicker and more efficient deplaning process.</p>
       </section>
 
       <section className="discussion">
@@ -63,7 +63,7 @@ function HomePage() {
 
       <section className="conclusion">
         <h2>Conclusion</h2>
-        <p>The <em>Fill and Flush</em> deplaning method is a groundbreaking approach to aircraft deplaning. If you are an airline executive or otherwise in a position to trial this system in real-world situations, please reach out.</p>
+        <p>The <em>Fill & Flush</em> deplaning method is a groundbreaking approach to aircraft deplaning. If you are an airline executive or otherwise in a position to trial this system in real-world situations, please reach out.</p>
       </section>
 
       <p>Contribute: This website is deployed as a GitHub page. Please contribute to it by opening issues and making pull requests <a href="https://github.com/josephecombs/fill-flush/">here</a>.</p>

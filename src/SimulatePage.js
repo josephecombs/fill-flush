@@ -138,7 +138,7 @@ class SimulatePage extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1><em>Fill and Flush</em> Deplaning Simulator</h1>
+        <h1><em>Fill & Flush</em> Deplaning Simulator</h1>
         <table className="input-table">
           <tbody>
             <tr>
@@ -163,7 +163,7 @@ class SimulatePage extends React.Component {
         {(this.state.totalLivesSaved !== null) && <div>
             <div id="simulation-statistics">
               <p>Time to deplane status quo: {this.formatTime(this.state.timeCurrent)}</p>
-              <p>Time to deplane using <em>Fill and Flush</em> method: {this.formatTime(this.state.timeFuture)}</p>
+              <p>Time to deplane using <em>Fill & Flush</em> method: {this.formatTime(this.state.timeFuture)}</p>
             </div>
           
             <div id="simulation-player-controls">
