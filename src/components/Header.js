@@ -117,7 +117,7 @@ function Header() {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              F&F🚽
             </Typography>
           {/* </Link> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
