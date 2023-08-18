@@ -40,7 +40,7 @@ function HomePage() {
 
         <h3>3. Wave System:</h3>
         <ul>
-          <li><strong>Waves of Passengers:</strong> The process repeats until all columns have exited. Passengers wishing to deplane as a group skip earlier <em>Flushes</em> and make trades if available with passengers not in groups.</li>
+          <li><strong>Waves of Passengers:</strong> The process repeats until all columns have exited. Passengers wishing to deplane as a group skip earlier <em>Flush</em>es and make trades if available with passengers not in groups.</li>
         </ul>
 
         <p>The <em>Fill & Flush</em> method's structured approach ensures that the aisle space is maximally utilized.</p>
@@ -56,10 +56,12 @@ function HomePage() {
         <h2>Discussion Topics / Unresolved Issues:</h2>
         <ul>
           <li>How to educate passengers</li>
-          <li>How to accommodate the elderly, people with children, and groups.</li>
-          <li>Challenges in modeling randomness in gathering belongings and walking behavior.</li>
-          <li>Considerations for 2-aisle large international flights, first-class passengers, and potential inter-passenger conflict.</li>
-          <li>How First Class is handled.</li>
+          <li>How to accommodate the elderly</li>
+          <li>How to accommodate groups with children</li>
+          <li>How to accommodate large groups</li>
+          <li>Challenges in modeling randomness in gathering belongings and walking behavior</li>
+          <li>2-aisle international flights</li>
+          <li>How First Class / various seating tiers should be handled</li>
           <li>Political Economy questions - who wins and who loses? Potential inter-passenger conflict.</li>
           <li>How to train the flight attendant who will be the orchestrator of this process.</li>
         </ul>
