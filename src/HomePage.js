@@ -64,6 +64,7 @@ function HomePage() {
           <li>How First Class / various seating tiers should be handled</li>
           <li>Political Economy questions - who wins and who loses? Potential inter-passenger conflict.</li>
           <li>How to train the flight attendant who will be the orchestrator of this process.</li>
+          <li>Is an even more <em>Lassiez-Faire</em> approach available? Could a simpler "anyone fill the aisle" approach work?</li>
         </ul>
       </section>
 
