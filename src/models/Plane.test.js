@@ -1,12 +1,13 @@
 import Plane from './Plane';
 import Passenger from './Passenger';
 
+const DEFAULT_SEED = 12345;
+
 describe('Plane', () => {
   it('calculates disembarkation times correctly for a single-column plane', () => {
     
-    const seed = 'defaultSeed';
     // Create a new Plane with 30 rows and 1 column
-    const plane = new Plane(30, 1, 3.1, 31, seed);
+    const plane = new Plane(30, 1, 3.1, 31, DEFAULT_SEED);
 
     // Assign passengers with known assembly times to each seat in the plane
     const fixedAssemblyTime = 5;
@@ -14,7 +15,7 @@ describe('Plane', () => {
     
     for (let i = 0; i < plane.rows; i++) {
       // Create a new Passenger with a known assembly time
-      const passenger = new Passenger(true, `${i+1}C`, seed);
+      const passenger = new Passenger(true, `${i+1}C`, DEFAULT_SEED);
       passenger.assemblyTimeCurrent = fixedAssemblyTime;
       passenger.assemblyTimeFuture = fixedAssemblyTime;
       passenger.minBuffer = fixedMinBuffer;
@@ -41,8 +42,7 @@ describe('Plane', () => {
   
   it('calculates disembarkation times correctly for a two-column plane with 15 rows', () => {
     // Create a new Plane with 15 rows and 2 columns
-    const seed = 'defaultSeed';
-    const plane = new Plane(15, 2, 3.1, 31, seed);
+    const plane = new Plane(15, 2, 3.1, 31, DEFAULT_SEED);
 
     // Assign passengers with known assembly times to each seat in the plane
     const fixedAssemblyTime = 5;
@@ -84,4 +84,25 @@ describe('Plane', () => {
     expect(plane.disembarkCurrent()).toBeCloseTo(expectedTimeCurrent, 10);
     expect(plane.disembarkFuture()).toBeCloseTo(expectedTimeFuture, 10);
   });
+
+  it('calculates disembarkation times correctly for a 1 row 1 column plane', () => {
+    // Create a new Plane with 1 row and 1 column
+    const plane = new Plane(1, 1, 3.1, 31, DEFAULT_SEED);
+
+    // Assign a passenger with known assembly times to the seat in the plane
+    const fixedAssemblyTime = 5;
+    const fixedMinBuffer = 2;
+    const passenger = new Passenger(true, '1C', DEFAULT_SEED);
+    passenger.assemblyTimeCurrent = fixedAssemblyTime;
+    passenger.assemblyTimeFuture = fixedAssemblyTime;
+    passenger.minBuffer = fixedMinBuffer;
+    plane.seats[0][0] = passenger;
+
+    // Calculate the total deplaning time for the 1 row 1 column plane
+    const totalDeplaningTime = fixedAssemblyTime + plane.calculateWalkTime();
+
+    // Check the output of the disembarkCurrent method
+    expect(plane.disembarkCurrent()).toBe(totalDeplaningTime);
+  });
 });
+
