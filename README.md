@@ -6,9 +6,9 @@ I've called the process "Fill & Flush" to represent the way the limited resource
 # High Level Individual De-Planing Lifecycle:
 - plane connects to jetbridge, and passengers are allowed to stand
 - passenger gathers belongings
-- passenger stands idle for some period of time (sometimes 0 seconds in status quo, if they're in a window seat)
+- passenger stands idle for some period of time (sometimes 0 seconds in status quo, if they're in an aisle seat and are first to stand)
 - person in front of passenger leaves
-- passenger places some time buffer between themselves and aisle neighbor
+- passenger places some time buffer between themselves and that aisle neighbor that just left
 - passenger walks plane with belongings
 
 # Order of deplaning (current):
@@ -37,7 +37,7 @@ I've called the process "Fill & Flush" to represent the way the limited resource
 - why go strictly column by column? why not be MORE laissez-faire and say just manage waves? wave 1, wave 2, wave 3, etc.?
   - this could be an even further improvement and in a way can solve the 1F problem by letting 1F occupy space if it is there - I suspect a few more people can fit the aisle than there are rows so you may lose some value being strict. OTOH could lead to conflict
 
-# Getting Started with Create React App
+# About Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
