@@ -76,6 +76,8 @@ function HomePage() {
       <p>Contribute: This website is deployed as a GitHub page. Please contribute to it by opening issues and making pull requests <a href="https://github.com/josephecombs/fill-flush/">here</a>.</p>
 
       <Link to="/simulate" className="simulate-button">Start Simulating</Link>
+
+      <p>This site has been featured on <a href="https://news.ycombinator.com/item?id=37162774">Hacker News</a> and on the Japanese blog <a href="https://gigazine.net/news/20230826-airplane-fill-and-flush/">Gigazine</a>.</p>
     </div>
   );
 }

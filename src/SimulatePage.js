@@ -1,6 +1,5 @@
 import React from 'react';
 import qs from 'qs';
-// import { withRouter } from "react-router-dom";
 
 import './stylesheets/SimulatePage.css';
 import Plane from './models/Plane';
