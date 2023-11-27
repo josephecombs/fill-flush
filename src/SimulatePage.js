@@ -29,6 +29,17 @@ class SimulatePage extends React.Component {
     const queryString = window.location.search.substring(1); // Remove the leading '?'
     const params = qs.parse(queryString);
 
+    try {
+      if (window.gtag) {
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-960244908/as5qCLDXmPoYEKzZ8MkD', // Conversion tracking ID and label
+          'event_name': 'conversion'
+        });
+      }
+    } catch (error) {
+      console.error('Error sending conversion event to GA:', error);
+    }
+
     this.setState({
       rows: params.rows ? parseInt(params.rows, 10) : this.state.rows,
       columns: params.columns ? parseInt(params.columns, 10) : this.state.columns,
