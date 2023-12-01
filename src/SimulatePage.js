@@ -1,10 +1,15 @@
 import React from 'react';
+import Modal from 'react-modal';
 import qs from 'qs';
 
 import './stylesheets/SimulatePage.css';
 import Plane from './models/Plane';
 import CurrentAnimation from './CurrentAnimation';
 import FutureAnimation from './FutureAnimation';
+
+import facebookIcon from './images/facebook-share-icon.png';
+import twitterIcon from './images/twitter-share-icon.png';
+import linkedinIcon from './images/linkedin-share-icon.png';
 
 class SimulatePage extends React.Component {
   constructor(props) {
@@ -22,10 +27,13 @@ class SimulatePage extends React.Component {
       totalLivesSaved: null,
       animationSecond: 0,
       seed: 12345,
+      showModal: false,
     };
   }
   
   componentDidMount(props) {    
+    Modal.setAppElement('.App'); // assuming '.App' is the parent of your modal
+
     const queryString = window.location.search.substring(1); // Remove the leading '?'
     const params = qs.parse(queryString);
 
@@ -136,6 +144,14 @@ class SimulatePage extends React.Component {
         this.animationInterval = setInterval(this.updateAnimation, 250);
       }
 
+      const hasSeenModal = window.localStorage.getItem('hasSeenModal') === 'true';
+
+      if (!hasSeenModal) {
+        setTimeout(() => {
+          this.setState({ showModal: true });
+          window.localStorage.setItem('hasSeenModal', 'true');
+        }, 5000);
+      }
       window.history.pushState({}, '', `?${newQueryString}`);
     });
   }
@@ -228,6 +244,30 @@ class SimulatePage extends React.Component {
             </table>
             <p>Total lives saved per year (assuming savings on each passenger flight): <strong>{Math.round(this.state.totalLivesSaved)}</strong></p>
         </div>}
+        <Modal
+          isOpen={this.state.showModal}
+          onRequestClose={() => this.setState({ showModal: false })}
+          contentLabel="My dialog"
+        >
+          <h2>Help us make a difference!</h2>
+          <p>This simulation can save lives. If you can help us get the attention of anyone in the airline industry, please<br/>
+            <a href="mailto:joseph.e.combs@gmail.com">reach out to me via email</a>
+          </p>
+
+          <p><strong>Share a link to this site with anyone you feel can help:</strong></p>
+          <div className="social-share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.fillandflush.com" target="_blank" rel="noopener noreferrer">
+              <img src={facebookIcon} alt="Share on Facebook" />
+            </a>
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.fillandflush.com" target="_blank" rel="noopener noreferrer">
+              <img src={twitterIcon} alt="Share on Twitter" />
+            </a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fwww.fillandflush.com" target="_blank" rel="noopener noreferrer">
+              <img src={linkedinIcon} alt="Share on LinkedIn" />
+            </a>
+          </div>
+          <button onClick={() => this.setState({ showModal: false })}><b>Return to Simulation</b></button>
+        </Modal>
       </div>
     );
   }

@@ -136,7 +136,88 @@
   opacity: 1;
 }
 
+.ReactModalPortal .ReactModal__Overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.75); /* Darker overlay for better focus on modal */
+}
 
+.ReactModalPortal .ReactModal__Content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px; /* Softer border radius */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25); /* Subtle shadow */
+  max-width: 400px; /* Reduced width for a more compact look */
+  width: auto; /* Auto width to only take up necessary space */
+  position: relative;
+  overflow: hidden; /* Ensures no content spills out */
+}
 
+.ReactModal__Content.ReactModal__Content--after-open {
+  inset: unset !important;
+}
 
+.ReactModalPortal h2 {
+  color: #333;
+  font-size: 20px; /* Smaller font size for headings */
+  font-weight: 600; /* Less bold for a lighter appearance */
+  margin-bottom: 10px; /* Reduced margin */
+}
 
+.ReactModalPortal p {
+  color: #444; /* Darker color for better readability */
+  line-height: 1.4; /* Adjusted line height for better text flow */
+  margin-bottom: 10px; /* Add margin to separate paragraphs */
+  font-size: 14px; /* Smaller font size for content */
+}
+
+.ReactModalPortal a {
+  color: #007bff;
+  text-decoration: underline; /* Underline to indicate interactivity */
+  padding: 5px;
+  display: inline-block;
+  margin-top: 5px; /* Reduced margin */
+  margin-bottom: 10px; /* Reduced margin */
+}
+
+.ReactModalPortal .social-share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Reduced gap */
+  margin-top: 15px; /* Reduced margin */
+  margin-bottom: 20px; /* Reduced margin */
+}
+
+.ReactModalPortal .social-share-buttons img {
+  width: 40px; /* Smaller icons */
+  height: 40px; /* Smaller icons */
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.ReactModalPortal .social-share-buttons img:hover {
+  transform: scale(1.1); /* Slight grow effect on hover */
+}
+
+.ReactModalPortal button {
+  background-color: #007BFF;
+  color: #ffffff;
+  padding: 8px 20px; /* Adjusted padding for better button sizing */
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px; /* Slightly smaller font size */
+  font-weight: 500; /* Lighter font weight */
+  border-radius: 5px; /* Softer border radius */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin: auto; /* Reduced margin */
+  display: block;
+  min-width: 100px;
+}
+
+.ReactModalPortal button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+}
